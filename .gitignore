@@ -1,0 +1,10 @@
+node_modules
+cache
+artifacts
+packages/hardhat/package-lock.json
+packages/hardhat/.env
+ToDo
+
+packages/frontend/ethernaut-hack-game/.env
+packages/frontend/ethernaut-hack-game/package-lock.json
+packages/frontend/ethernaut-hack-game/yarn.lock
