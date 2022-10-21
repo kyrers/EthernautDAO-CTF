@@ -57,6 +57,7 @@ contract Controller is Ownable {
      * @param _challenge The challenge to verify
      */
     function validateSolution(address payable _challenge) external {
+        require(_challenge != address(0), "Zero address is not a valid challenge address!");
         ChallengeData storage challengeData = challengeInstances[_challenge];
 
         require(challengeData.player == msg.sender, "This player is not associated with this challenge instance!");
