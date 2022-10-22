@@ -1,10 +1,97 @@
 .App {
+  background: #073d61;
+  background: linear-gradient(25deg, #d4376e -40%, #073d61 100%);
   text-align: center;
+  min-height: 100vh;
+  color: white;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.app-info-panel {
+  display: flex;
+  align-items: center;
+}
+
+.custom-button {
+  border-radius: 10px !important;
+  background-color: rgba(33,35,40,255) !important;
+  border: 1px solid gray !important;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  background-color: #5c636a !important;
+}
+
+.connect-button {
+  min-height: 35px;
+  min-width: 100px;
+}
+
+.info-button {
+  height: 30px;
+  cursor: pointer;
+  margin-left: 25px;
+}
+
+.app-title {
+  font-size: 30px;
+  margin-left: 25px;
+}
+
+.wallet-panel {
+  display: flex;
+  flex-direction: column;
+  margin-right: 25px;
+  margin-top: 25px;
+}
+
+.header-target-network {
+  font-size: 12px;
+  margin: 0px;
+  color: #e0d068
+}
+
+.main-panel {
+  padding: 25px;
+  width: 100%;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.modal-content {
+  background: rgba(16,18,18,255) !important;
+  color: white !important;
+}
+
+.model-header .btn-close {
+  color: white !important;
+}
+/*STYLE*/
+.opacity-65 {
+  opacity: .65;
+}
+
+.white-space-break-spaces {
+  white-space: break-spaces;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,25 +100,12 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
