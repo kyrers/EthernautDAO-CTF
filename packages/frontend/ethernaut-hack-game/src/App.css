@@ -1,3 +1,4 @@
+/* COMPONENTS */
 .App {
   background: #073d61;
   background: linear-gradient(25deg, #d4376e -40%, #073d61 100%);
@@ -78,10 +79,12 @@
   color: white !important;
 }
 
-.model-header .btn-close {
-  color: white !important;
+.modal-header {
+  justify-content: center !important;
 }
-/*STYLE*/
+/*---------------------*/
+
+/* STYLE */
 .opacity-65 {
   opacity: .65;
 }
@@ -93,6 +96,7 @@
 .margin-bottom-10 {
   margin-bottom: 10px;
 }
+/*---------------------*/
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

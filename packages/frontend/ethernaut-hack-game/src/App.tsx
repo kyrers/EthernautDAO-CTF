@@ -5,8 +5,10 @@ import { targetNetwork } from "./config/config";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Header from "./components/Header";
+import MainPanel from "./components/MainPanel";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { strings } from "./utils/strings";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -31,7 +33,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header name="EthernautDAO Hacker Game" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
+      <Header name={strings.title} targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
+      <MainPanel />
     </div>
   );
 }
