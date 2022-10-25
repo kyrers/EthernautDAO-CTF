@@ -82,6 +82,13 @@
 .modal-header {
   justify-content: center !important;
 }
+
+.challenge-card {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  background: rgba(255,255,255,0.09);
+}
 /*---------------------*/
 
 /* STYLE */
