@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Challenge.sol";
 
 /**
- * @notice This contract controls the deployment and solving of level instances. Based on OpenZepellin Ethernaut implementation (https://github.com/OpenZeppelin/ethernaut/blob/master/contracts/contracts/Ethernaut.sol)
+ * @notice This contract controls the deployment and solving of challenge instances. Based on OpenZepellin Ethernaut implementation (https://github.com/OpenZeppelin/ethernaut/blob/master/contracts/contracts/Ethernaut.sol)
  * @author kyrers
  */
 contract Controller is Ownable {
@@ -34,7 +34,7 @@ contract Controller is Ownable {
      * @notice Only the owner can add new challenges
      * @param _challenge The new challenge
      */
-    function addLevel(Challenge _challenge) external onlyOwner {
+    function addChallenge(Challenge _challenge) external onlyOwner {
         existingChallenges[address(_challenge)] = true;
     }
 

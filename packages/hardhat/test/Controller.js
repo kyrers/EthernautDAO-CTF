@@ -28,7 +28,7 @@ describe("Controller", function () {
             const challengeFactory = await ethers.getContractFactory("PrivateDataFactory");
             const challengeContract = await challengeFactory.deploy(rndString);
 
-            await controllerContract.addLevel(challengeContract.address);
+            await controllerContract.addChallenge(challengeContract.address);
 
             const challengeExists = await controllerContract.existingChallenges(challengeContract.address);
             expect(challengeExists).to.be.true;
@@ -40,7 +40,7 @@ describe("Controller", function () {
             const challengeFactory = await ethers.getContractFactory("PrivateDataFactory");
             const challengeContract = await challengeFactory.deploy(rndString);
 
-            await expect(controllerContract.connect(signer).addLevel(challengeContract.address)).to.be.reverted;
+            await expect(controllerContract.connect(signer).addChallenge(challengeContract.address)).to.be.reverted;
         });
     });
 
@@ -51,7 +51,7 @@ describe("Controller", function () {
             const challengeFactory = await ethers.getContractFactory("PrivateDataFactory");
             const challengeContract = await challengeFactory.deploy(rndString);
 
-            await controllerContract.addLevel(challengeContract.address);
+            await controllerContract.addChallenge(challengeContract.address);
 
             const createInstanceTx = await controllerContract.connect(signer).createInstance(challengeContract.address);
             const createInstanceTxReceipt = await createInstanceTx.wait();
@@ -82,8 +82,8 @@ describe("Controller", function () {
             const challengeFactoryFactory = await ethers.getContractFactory("PrivateDataFactory");
             const challengeFactoryContract = await challengeFactoryFactory.deploy(rndString);
 
-            //Add the Level
-            await controllerContract.addLevel(challengeFactoryContract.address);
+            //Add the Challenge
+            await controllerContract.addChallenge(challengeFactoryContract.address);
 
             //Create an instance for the player
             const createInstanceTx = await controllerContract.connect(player).createInstance(challengeFactoryContract.address);

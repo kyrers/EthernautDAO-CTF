@@ -1,5 +1,5 @@
 //Organized into arrays of 3, to represent the number of columns
-export const levels = [
+export const challenges = [
     [
         { "id": 0, "name": "Private Data", "factory": "", "description": "" },
         { "id": 1, "name": "Mock", "factory": "", "description": "" },
