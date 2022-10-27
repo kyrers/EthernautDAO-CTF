@@ -1,33 +1,20 @@
-import { JSXElementConstructor, useEffect, useState, FC, ReactElement, ReactNode } from "react";
+import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { levels } from "../utils/levels";
 
 function MainPanel() {
-    const [levelsDictionary, setLevelsDictionary] = useState(new Map());
     const [selectedLevel, setSelectedLevel] = useState();
 
-    useEffect(() => {
-        let auxDictionary = new Map<Number, Array<any>>();
-
-        for (let i = 0; i < levels.length; i += 6) {
-            const chunk = levels.slice(i, i + 6);
-            auxDictionary.set(i, chunk);
-        }
-
-        setLevelsDictionary(auxDictionary);
-    }, []);
-
     const renderChallenges = () => {
-
-        console.log(levelsDictionary);
-
-        const renderRow = (levels: Array<any>) => {
-            console.log(levels);
+        const renderRow = (levelsRow: Array<any>) => {
             return (
-                <Row className="main-panel">
+                <Row>
                     {
-                        levels.map((level) =>
-                            <Col className="challenge-card" sm={2}>{level.name}</Col>
+                        levelsRow.map((level) => {
+                            return (
+                                <Col className="challenge-card" sm={2}>{level.name}</Col>
+                            );
+                        }
                         )
                     }
                 </Row>
@@ -35,14 +22,12 @@ function MainPanel() {
         }
 
         return (
-            <div>
-                {Array.from(levelsDictionary).map((dictValues) => renderRow(dictValues[1]))}
-            </div>
+            levels.map(levelsRow => renderRow(levelsRow))
         );
     }
 
     return (
-        <div>
+        <div className="main-panel">
             {renderChallenges()}
         </div>
     );
