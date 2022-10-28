@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { levels } from "../utils/levels";
+import { challenges } from "../utils/challenges";
 
 function MainPanel() {
-    const [selectedLevel, setSelectedLevel] = useState();
+    const [selectedChallenge, setSelectedChallenge] = useState({ "id": undefined, "name": "", "factory": "", "description": "" });
 
     const renderChallenges = () => {
-        const renderRow = (levelsRow: Array<any>) => {
+        const renderRow = (challengesRow: Array<any>, index: Number) => {
             return (
-                <Row>
+                <Row key={`challenge-row-${index}`}>
                     {
-                        levelsRow.map((level) => {
+                        challengesRow.map((challenge) => {
                             return (
-                                <Col className="challenge-card" sm={2}>{level.name}</Col>
+                                <Col key={`challenge-id-${challenge.id}`} className="challenge-card" sm={2} onClick={() => setSelectedChallenge(challenge)}>{challenge.name}</Col>
                             );
                         }
                         )
@@ -22,13 +22,26 @@ function MainPanel() {
         }
 
         return (
-            levels.map(levelsRow => renderRow(levelsRow))
+            challenges.map((challengesRow, index) => renderRow(challengesRow, index))
         );
+    }
+
+    const renderChallengeDetails = () => {
+        return (
+            <div>
+                {selectedChallenge.name}
+            </div >
+        )
     }
 
     return (
         <div className="main-panel">
-            {renderChallenges()}
+            {
+                undefined == selectedChallenge.id ?
+                    renderChallenges()
+                    :
+                    renderChallengeDetails()
+            }
         </div>
     );
 }
