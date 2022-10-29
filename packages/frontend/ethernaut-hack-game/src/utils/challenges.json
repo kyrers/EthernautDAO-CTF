@@ -1,12 +1,17 @@
 {
-    "challenges" : [
+    "challenges": [
         [
             {
                 "id": 0,
                 "name": "Private Data",
                 "factory": "",
                 "description": "",
-                "code": []
+                "code": [
+                    {
+                        "contractName": "PrivateData.sol",
+                        "filePath": "../../../../hardhat/contracts/challenges/PrivateData/PrivateData.sol"
+                    }
+                ]
             },
             {
                 "id": 1,

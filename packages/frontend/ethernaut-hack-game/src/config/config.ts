@@ -1,3 +1,9 @@
+//Configure hljs to recognize solidity
+import hljsDefineSolidity from "highlightjs-solidity";
+import hljs from "highlight.js";
+hljsDefineSolidity(hljs);
+//----
+
 export const NETWORKS = {
     localhost: {
         name: "localhost",

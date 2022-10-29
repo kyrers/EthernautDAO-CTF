@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
-import { Button } from "react-bootstrap";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
+
 type FunctionProps = {
     callback: MouseEventHandler<SVGElement>;
 };
