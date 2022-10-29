@@ -1,0 +1,94 @@
+{
+    "challenges" : [
+        [
+            {
+                "id": 0,
+                "name": "Private Data",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 1,
+                "name": "Mock",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 2,
+                "name": "Mock 2",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 3,
+                "name": "Mock 3",
+                "factory": "",
+                "description": "",
+                "code": []
+            }
+        ],
+        [
+            {
+                "id": 4,
+                "name": "Mock 4",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 5,
+                "name": "Mock 5",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 6,
+                "name": "Mock 6",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 7,
+                "name": "Mock 7",
+                "factory": "",
+                "description": "",
+                "code": []
+            }
+        ],
+        [
+            {
+                "id": 8,
+                "name": "Mock 8",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 9,
+                "name": "Mock 9",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 10,
+                "name": "Mock 10",
+                "factory": "",
+                "description": "",
+                "code": []
+            },
+            {
+                "id": 11,
+                "name": "Mock 11",
+                "factory": "",
+                "description": "",
+                "code": []
+            }
+        ]
+    ]
+}

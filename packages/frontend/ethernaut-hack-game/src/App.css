@@ -27,7 +27,7 @@
 
 .custom-button {
   border-radius: 10px !important;
-  background-color: rgba(33,35,40,255) !important;
+  background-color: rgba(33, 35, 40, 255) !important;
   border: 1px solid gray !important;
   cursor: pointer;
 }
@@ -81,7 +81,7 @@
 }
 
 .modal-content {
-  background: rgba(16,18,18,255) !important;
+  background: rgba(16, 18, 18, 255) !important;
   color: white !important;
 }
 
@@ -93,8 +93,9 @@
   border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
-  background: rgba(255,255,255,0.09);
+  background: rgba(255, 255, 255, 0.09);
 }
+
 /*---------------------*/
 
 /* STYLE */
@@ -106,9 +107,14 @@
   white-space: break-spaces;
 }
 
+.margin-left-20 {
+  margin-left: 20px;
+}
+
 .margin-bottom-10 {
   margin-bottom: 10px;
 }
+
 /*---------------------*/
 
 @media (prefers-reduced-motion: no-preference) {
