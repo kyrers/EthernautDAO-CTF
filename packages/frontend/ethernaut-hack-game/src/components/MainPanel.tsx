@@ -3,7 +3,7 @@ import { Row, Col, Tabs, Tab, Spinner } from "react-bootstrap";
 import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
-import loadContractCode from "../hooks/loadContractCode";
+import loadContractCode from "../functions/loadContractCode";
 
 
 function MainPanel() {

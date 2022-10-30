@@ -9,7 +9,7 @@
                 "code": [
                     {
                         "contractName": "PrivateData.sol",
-                        "filePath": "../../../../hardhat/contracts/challenges/PrivateData/PrivateData.sol"
+                        "filePath": "PrivateData/PrivateData.sol"
                     }
                 ]
             },

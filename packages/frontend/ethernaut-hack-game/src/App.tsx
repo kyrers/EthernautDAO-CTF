@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from "@ethersproject/providers";
-import { connect } from "./hooks/connect";
-import { loadContract } from "./hooks/loadContract";
+import { connect } from "./functions/connect";
+import { loadContract } from "./functions/loadContract";
 import { targetNetwork } from "./config/config";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
