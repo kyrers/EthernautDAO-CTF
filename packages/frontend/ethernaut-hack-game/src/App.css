@@ -98,6 +98,27 @@
 /*---------------------*/
 
 /* STYLE */
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: gray;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(33, 35, 40, 255);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 20px;
+}
+
 .opacity-65 {
   opacity: .65;
 }
@@ -116,6 +137,10 @@
 
 .margin-top-20 {
   margin-top: 20px;
+}
+
+.text-align-start {
+  text-align: start;
 }
 
 /*---------------------*/

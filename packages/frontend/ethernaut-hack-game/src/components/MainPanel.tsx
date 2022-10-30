@@ -4,7 +4,7 @@ import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
 import loadContractCode from "../functions/loadContractCode";
-
+import "../css/vs2015_dark.css";
 
 function MainPanel() {
     const emptyChallengeObject = { "id": undefined, "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
@@ -84,8 +84,8 @@ function MainPanel() {
                             <Tabs id="code-tabs" className="mb-3 margin-top-20">
                                 {
                                     selectedChallenge.code.map((contract, index) =>
-                                        <Tab key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
-                                            <pre><code className="language-solidity" dangerouslySetInnerHTML={getContractCode(index)}></code></pre>
+                                        <Tab className="text-align-start" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
+                                            <pre><code className="hljs" dangerouslySetInnerHTML={getContractCode(index)}></code></pre>
                                         </Tab>
                                     )
                                 }
