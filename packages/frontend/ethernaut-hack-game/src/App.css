@@ -92,7 +92,17 @@
   border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.challenge-card:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.challenge-details-header {
+  display: flex;
+  justify-content: space-between;
 }
 
 /*---------------------*/
@@ -139,8 +149,16 @@
   margin-top: 20px;
 }
 
+.margin-right-10 {
+  margin-right: 10px;
+}
+
 .text-align-start {
   text-align: start;
+}
+
+.font-size-18 {
+  font-size: 18px;
 }
 
 /*---------------------*/
