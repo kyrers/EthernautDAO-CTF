@@ -19,7 +19,7 @@ contract Controller is Ownable {
     }
 
     mapping(address => bool) public existingChallenges;
-    mapping(address => ChallengeData) challengeInstances;
+    mapping(address => ChallengeData) public challengeInstances;
 
     /*------------------------------------------------------------
                                  EVENTS

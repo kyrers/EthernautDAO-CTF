@@ -7,7 +7,7 @@ type FunctionProps = {
 
 function BackButton({ callback }: FunctionProps) {
     return (
-        <ArrowLeftCircle size={48} onClick={callback} />
+        <ArrowLeftCircle className="cursor-pointer" size={48} onClick={callback} />
     );
 }
 

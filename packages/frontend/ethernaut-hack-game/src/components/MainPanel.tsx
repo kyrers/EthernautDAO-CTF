@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Tabs, Tab, Spinner, Button } from "react-bootstrap";
+import { loadChallengeContractCode } from "../functions/loadChallengeContractCode";
 import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
-import loadContractCode from "../functions/loadContractCode";
 import "../css/vs2015_dark.css";
 
 function MainPanel() {
@@ -20,7 +20,7 @@ function MainPanel() {
     --------------------------------------------------------------*/
     useEffect(() => {
         const loadCode = async (filePath: string) => {
-            return await loadContractCode(filePath);
+            return await loadChallengeContractCode(filePath);
         };
 
         if (selectedChallenge.id !== undefined) {
@@ -84,9 +84,7 @@ function MainPanel() {
             <div>
                 {
                     loadingCode ?
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </Spinner>
+                        <Spinner animation="border" role="status" />
                         :
                         <>
                             <div className="challenge-details-header">
