@@ -36,8 +36,12 @@ function App() {
     promptConnect();
   }, []);
 
-  //Listen to wallet changes
+  //Listen to wallet/network changes
   window.ethereum.on('accountsChanged', () => {
+    window.location.reload();
+  });
+
+  window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
 
