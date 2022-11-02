@@ -16,6 +16,11 @@ async function main() {
   const privateDataFactory = await ethers.getContractFactory("PrivateDataFactory");
   const privateDataFactoryContract = await privateDataFactory.deploy(process.env.PRIVATE_DATA_RND_STRING);
   console.log(`Private Data Factory deployed to ${privateDataFactoryContract.address}`);
+
+  //Register challenges
+  console.log("## Registering challenges...");
+  await controllerContract.addChallenge(privateDataFactoryContract.address);
+  console.log("## Done!");
 }
 
 main()
