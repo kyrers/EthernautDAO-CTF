@@ -9,23 +9,18 @@ import MainPanel from "./components/MainPanel";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
+import { createChallengeInstance } from "./functions/challengeActions";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
   const [connectedWallet, setConnectedWallet] = useState("");
   const [loadingInfo, setLoadingInfo] = useState(true);
+  const [creatingInstance, setCreatingInstance] = useState(false);
   const [controller, setController] = useState();
   const [challengeInstances, setChallengeInstances] = useState()
 
-  //Connect user wallet
+  //Connect user wallet & load contract info
   useEffect(() => {
-    const loadInfo = async (signer: JsonRpcSigner | null) => {
-      const { controllerContract, challengeInstances } = await loadControllerContractInfo(signer);
-      setController(controllerContract);
-      setChallengeInstances(challengeInstances);
-      setLoadingInfo(false);
-    }
-
     const promptConnect = async () => {
       const { signer, signerAddress } = await connect();
       setUserSigner(signer);
@@ -44,6 +39,22 @@ function App() {
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
+  //-------
+
+  const loadInfo = async (signer: JsonRpcSigner | null) => {
+    const { controllerContract, challengeInstances } = await loadControllerContractInfo(signer);
+    setController(controllerContract);
+    setChallengeInstances(challengeInstances);
+    setLoadingInfo(false);
+    setCreatingInstance(false);
+  }
+
+  const createInstance = async (instanceAddress: string) => {
+    setCreatingInstance(true);
+    await createChallengeInstance(controller, instanceAddress);
+    await loadInfo(userSigner!);
+  }
+
 
   return (
     <div className="App">
@@ -52,7 +63,7 @@ function App() {
         loadingInfo ?
           <Spinner animation="border" role="status" />
           :
-          <MainPanel />
+          <MainPanel creatingInstance={creatingInstance} createInstance={(_instanceAddress) => createInstance(_instanceAddress)} />
       }
     </div>
   );

@@ -6,7 +6,12 @@ import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
 import "../css/vs2015_dark.css";
 
-function MainPanel() {
+type FunctionProps = {
+    creatingInstance: Boolean;
+    createInstance: (instanceAddress: string) => void;
+};
+
+function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
     //Placeholder for no selected challenge
     const emptyChallengeObject = { "id": undefined, "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
 
@@ -83,7 +88,7 @@ function MainPanel() {
         return (
             <div>
                 {
-                    loadingCode ?
+                    loadingCode || creatingInstance?
                         <Spinner animation="border" role="status" />
                         :
                         <>
@@ -93,7 +98,7 @@ function MainPanel() {
                                     <h1 className="margin-left-20">{selectedChallenge.name}</h1>
                                 </div>
                                 <div className="d-inline-flex">
-                                    <Button className="custom-button margin-right-10">
+                                    <Button className="custom-button margin-right-10" onClick={() => createInstance(selectedChallenge.factory)}>
                                         {
                                             <span>Create instance</span>
                                         }
