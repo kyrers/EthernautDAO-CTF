@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Tabs, Tab, Spinner, Button } from "react-bootstrap";
-import { loadChallengeContractCode } from "../functions/loadChallengeContractCode";
+import { loadChallengeContractCode } from "../functions/challengeActions";
 import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
@@ -88,7 +88,7 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
         return (
             <div>
                 {
-                    loadingCode || creatingInstance?
+                    loadingCode || creatingInstance ?
                         <Spinner animation="border" role="status" />
                         :
                         <>

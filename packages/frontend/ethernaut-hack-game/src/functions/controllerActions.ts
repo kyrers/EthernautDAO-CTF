@@ -3,8 +3,11 @@ import { contractAddress } from '../config/config';
 import ControllerContractArtifact from "../artifacts/contracts/Controller.sol/Controller.json";
 import data from "../utils/challenges.json";
 
-export const loadControllerContractInfo: any = async (signer: any) => {
-    let controllerContract = new Contract(contractAddress, ControllerContractArtifact.abi, signer);
+export const loadControllerContract: any = (signer: any) => {
+    return new Contract(contractAddress, ControllerContractArtifact.abi, signer);
+}
+
+export const loadExistingChallengeInstances: any = async (controllerContract: Contract) => {
     let challengeInstances: any[] = [];
     let promises: any[] = [];
 
@@ -18,10 +21,10 @@ export const loadControllerContractInfo: any = async (signer: any) => {
 
     await Promise.all(promises);
 
-    return { controllerContract: controllerContract, challengeInstances: challengeInstances };
+    return challengeInstances;
 };
 
-export const loadChallengeInstances = async (controller: Contract, address: string) => {
+const loadChallengeInstances = async (controller: Contract, address: string) => {
     let result = [];
     let instances = await controller.challengeInstances(address);
     for (let i = 0; i < instances.length; i = i + 3) {

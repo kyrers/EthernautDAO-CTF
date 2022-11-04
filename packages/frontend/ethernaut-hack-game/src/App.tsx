@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from "@ethersproject/providers";
 import { connect } from "./functions/connect";
-import { loadControllerContractInfo } from "./functions/loadControllerContractInfo";
+import { loadControllerContract, loadExistingChallengeInstances } from "./functions/controllerActions";
 import { targetNetwork } from "./config/config";
 import { useEffect, useState } from "react";
 import { strings } from "./utils/strings";
@@ -17,33 +17,57 @@ function App() {
   const [loadingInfo, setLoadingInfo] = useState(true);
   const [creatingInstance, setCreatingInstance] = useState(false);
   const [controller, setController] = useState();
-  const [challengeInstances, setChallengeInstances] = useState()
+  const [challengeInstances, setChallengeInstances] = useState();
 
+  /*------------------------------------------------------------
+                               HOOKS
+  --------------------------------------------------------------*/
   //Connect user wallet & load contract info
   useEffect(() => {
     const promptConnect = async () => {
       const { signer, signerAddress } = await connect();
       setUserSigner(signer);
       setConnectedWallet(signerAddress);
-      loadInfo(signer);
+      //loadInfo(signer);
     }
 
     promptConnect();
   }, []);
 
-  //Listen to wallet/network changes
+  useEffect(() => {
+    if (userSigner !== null) {
+      loadContract();
+    }
+  }, [userSigner]);
+
+  useEffect(() => {
+    if (userSigner !== undefined) {
+      loadChallengeInstances();
+    }
+  }, [controller]);
+
+
+  /*------------------------------------------------------------
+                                 FUNCTIONS
+  --------------------------------------------------------------*/
+  //Listen to wallet changes
   window.ethereum.on('accountsChanged', () => {
     window.location.reload();
   });
 
+  //Listen to network changes
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
   //-------
 
-  const loadInfo = async (signer: JsonRpcSigner | null) => {
-    const { controllerContract, challengeInstances } = await loadControllerContractInfo(signer);
-    setController(controllerContract);
+  const loadContract = async () => {
+    const contract = loadControllerContract(userSigner);
+    setController(contract);
+  }
+
+  const loadChallengeInstances = async () => {
+    const challengeInstances = await loadExistingChallengeInstances(controller);
     setChallengeInstances(challengeInstances);
     setLoadingInfo(false);
     setCreatingInstance(false);
@@ -52,10 +76,13 @@ function App() {
   const createInstance = async (instanceAddress: string) => {
     setCreatingInstance(true);
     await createChallengeInstance(controller, instanceAddress);
-    await loadInfo(userSigner!);
+    await loadChallengeInstances();
   }
 
 
+  /*------------------------------------------------------------
+                                 RENDER
+  --------------------------------------------------------------*/
   return (
     <div className="App">
       <Header name={strings.title} targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
