@@ -7,7 +7,7 @@ export const loadControllerContract: any = (signer: any) => {
     return new Contract(contractAddress, ControllerContractArtifact.abi, signer);
 }
 
-export const loadExistingChallengeInstances: any = async (controllerContract: Contract) => {
+/*export const loadExistingChallengeInstances: any = async (controllerContract: Contract) => {
     let challengeInstances: any[] = [];
     let promises: any[] = [];
 
@@ -32,4 +32,4 @@ const loadChallengeInstances = async (controller: Contract, address: string) => 
     }
 
     return result;
-}
+}*/

@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from "@ethersproject/providers";
 import { connect } from "./functions/connect";
-import { loadControllerContract, loadExistingChallengeInstances } from "./functions/controllerActions";
+import { loadControllerContract/*, loadExistingChallengeInstances*/ } from "./functions/controllerActions";
 import { targetNetwork } from "./config/config";
 import { useEffect, useState } from "react";
 import { strings } from "./utils/strings";
@@ -10,6 +10,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
 import { createChallengeInstance } from "./functions/challengeActions";
+import { initializeStorage } from "./functions/playerActions";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -35,14 +36,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (userSigner !== null) {
+    if (userSigner !== undefined) {
+      initializeStorage(connectedWallet);
       loadContract();
     }
   }, [userSigner]);
 
   useEffect(() => {
     if (userSigner !== undefined) {
-      loadChallengeInstances();
+      //loadChallengeInstances();
     }
   }, [controller]);
 
@@ -66,17 +68,17 @@ function App() {
     setController(contract);
   }
 
-  const loadChallengeInstances = async () => {
+  /*const loadChallengeInstances = async () => {
     const challengeInstances = await loadExistingChallengeInstances(controller);
     setChallengeInstances(challengeInstances);
     setLoadingInfo(false);
     setCreatingInstance(false);
-  }
+  }*/
 
   const createInstance = async (instanceAddress: string) => {
     setCreatingInstance(true);
     await createChallengeInstance(controller, instanceAddress);
-    await loadChallengeInstances();
+   // await loadChallengeInstances();
   }
 
 
