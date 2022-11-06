@@ -1,9 +1,11 @@
 import { Contract } from "ethers";
 
-export const createChallengeInstance: any = async (controller: Contract, instanceAddress: string) => {
+export const createChallengeInstance: any = async (controller: Contract, challengeId: string, factoryAddress: string) => {
     try {
-        let createTx = await controller.createInstance(instanceAddress);
-        await createTx.wait();
+        let createTx = await controller.createInstance(factoryAddress);
+        let receipt = await createTx.wait();
+        let newInstance = { "challengeId": challengeId, "instanceAddress": receipt.events[0].args[0], "solved": false };
+        return newInstance;
     } catch (error: any) {
         if (error.code === 4001) {
             alert("Please accept the transaction.");
@@ -24,4 +26,4 @@ export const loadChallengeContractCode: any = (path: any) => {
             reject(error)
         }
     })
-}
+};

@@ -10,7 +10,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
 import { createChallengeInstance } from "./functions/challengeActions";
-import { initializeStorage } from "./functions/playerActions";
+import { addChallengeInstance, initializeStorage, loadPlayerStorage } from "./functions/playerActions";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -18,7 +18,7 @@ function App() {
   const [loadingInfo, setLoadingInfo] = useState(true);
   const [creatingInstance, setCreatingInstance] = useState(false);
   const [controller, setController] = useState();
-  const [challengeInstances, setChallengeInstances] = useState();
+  const [playerInfo, setPlayerInfo] = useState();
 
   /*------------------------------------------------------------
                                HOOKS
@@ -39,14 +39,14 @@ function App() {
     if (userSigner !== undefined) {
       initializeStorage(connectedWallet);
       loadContract();
+      loadPlayerInfo();
     }
   }, [userSigner]);
 
   useEffect(() => {
-    if (userSigner !== undefined) {
-      //loadChallengeInstances();
-    }
-  }, [controller]);
+    console.log("PLAYER INFO", playerInfo);
+    setLoadingInfo(false);
+   }, [playerInfo]);
 
 
   /*------------------------------------------------------------
@@ -66,21 +66,19 @@ function App() {
   const loadContract = async () => {
     const contract = loadControllerContract(userSigner);
     setController(contract);
+  };
+
+  const loadPlayerInfo = () => {
+    let playerStatus = loadPlayerStorage(connectedWallet);
+    setPlayerInfo(playerStatus);
   }
 
-  /*const loadChallengeInstances = async () => {
-    const challengeInstances = await loadExistingChallengeInstances(controller);
-    setChallengeInstances(challengeInstances);
-    setLoadingInfo(false);
-    setCreatingInstance(false);
-  }*/
-
-  const createInstance = async (instanceAddress: string) => {
+  const createInstance = async (challengeId: string, factoryAddress: string) => {
     setCreatingInstance(true);
-    await createChallengeInstance(controller, instanceAddress);
-   // await loadChallengeInstances();
-  }
-
+    let newInstance = await createChallengeInstance(controller, challengeId, factoryAddress);
+    addChallengeInstance(connectedWallet, newInstance, loadPlayerInfo);
+    setCreatingInstance(false);
+  };
 
   /*------------------------------------------------------------
                                  RENDER
@@ -92,7 +90,7 @@ function App() {
         loadingInfo ?
           <Spinner animation="border" role="status" />
           :
-          <MainPanel creatingInstance={creatingInstance} createInstance={(_instanceAddress) => createInstance(_instanceAddress)} />
+          <MainPanel creatingInstance={creatingInstance} createInstance={(_challengeId, _factoryAddress) => createInstance(_challengeId, _factoryAddress)} />
       }
     </div>
   );

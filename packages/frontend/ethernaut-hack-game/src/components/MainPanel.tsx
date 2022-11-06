@@ -8,12 +8,12 @@ import "../css/vs2015_dark.css";
 
 type FunctionProps = {
     creatingInstance: Boolean;
-    createInstance: (instanceAddress: string) => void;
+    createInstance: (challengeId: string, factoryAddress: string) => void;
 };
 
 function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
     //Placeholder for no selected challenge
-    const emptyChallengeObject = { "id": undefined, "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
+    const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
 
     const [selectedChallenge, setSelectedChallenge] = useState(emptyChallengeObject);
     const [loadingCode, setLoadingCode] = useState(true);
@@ -98,7 +98,7 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
                                     <h1 className="margin-left-20">{selectedChallenge.name}</h1>
                                 </div>
                                 <div className="d-inline-flex">
-                                    <Button className="custom-button margin-right-10" onClick={() => createInstance(selectedChallenge.factory)}>
+                                    <Button className="custom-button margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)}>
                                         {
                                             <span>Create instance</span>
                                         }
@@ -130,7 +130,7 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
     return (
         <div className="main-panel">
             {
-                undefined === selectedChallenge.id ?
+                "" === selectedChallenge.id ?
                     renderChallenges()
                     :
                     renderChallengeDetails()
