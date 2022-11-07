@@ -7,17 +7,20 @@ import BackButton from "./BackButton";
 import "../css/vs2015_dark.css";
 
 type FunctionProps = {
+    playerInfo: any[];
     creatingInstance: Boolean;
     createInstance: (challengeId: string, factoryAddress: string) => void;
 };
 
-function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
-    //Placeholder for no selected challenge
+function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionProps) {
+    //Placeholders for no selected challenge/ no challenge player status
     const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
+    const emptyChallengePlayerStatusObject = { "challengeId": "", "instanceAddress": "", "solved": false };
 
     const [selectedChallenge, setSelectedChallenge] = useState(emptyChallengeObject);
     const [loadingCode, setLoadingCode] = useState(true);
     const [selectedChallengeContractsCode, setSelectedChallengeContractsCode] = useState<any[]>([]);
+    const [selectedChallengePlayerStatus, setSelectedChallengePlayerStatus] = useState(emptyChallengePlayerStatusObject);
 
 
     /*------------------------------------------------------------
@@ -28,7 +31,7 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
             return await loadChallengeContractCode(filePath);
         };
 
-        if (selectedChallenge.id !== undefined) {
+        if ("" !== selectedChallenge.id) {
             let loadedCode: any[] = [];
             let promises: any[] = [];
 
@@ -50,9 +53,20 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
     /*------------------------------------------------------------
                                  FUNCTIONS
     --------------------------------------------------------------*/
+    const handleBackButtonClick = () => {
+        setSelectedChallenge(emptyChallengeObject);
+        setSelectedChallengePlayerStatus(emptyChallengePlayerStatusObject);
+    }
+
     const handleSelectedChallenge = (challenge: any) => {
         setLoadingCode(true);
         setSelectedChallenge(challenge);
+        loadPlayerChallengeProgress(challenge)
+    }
+
+    const loadPlayerChallengeProgress = (challenge: any) => {
+        let challengeStatus = playerInfo.find(progress => progress.challengeId === challenge.id);
+        setSelectedChallengePlayerStatus(undefined !== challengeStatus ? challengeStatus : emptyChallengePlayerStatusObject);
     }
 
 
@@ -94,16 +108,16 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
                         <>
                             <div className="challenge-details-header">
                                 <div className="d-inline-flex">
-                                    <BackButton callback={() => setSelectedChallenge(emptyChallengeObject)} />
+                                    <BackButton callback={handleBackButtonClick} />
                                     <h1 className="margin-left-20">{selectedChallenge.name}</h1>
                                 </div>
                                 <div className="d-inline-flex">
-                                    <Button className="custom-button margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)}>
+                                    <Button className="custom-button margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={"" !== selectedChallengePlayerStatus.challengeId}>
                                         {
                                             <span>Create instance</span>
                                         }
                                     </Button>
-                                    <Button className="custom-button">
+                                    <Button className="custom-button" disabled={"" === selectedChallengePlayerStatus.challengeId}>
                                         {
                                             <span>Validate solution</span>
                                         }
@@ -115,7 +129,7 @@ function MainPanel({ creatingInstance, createInstance }: FunctionProps) {
                                 {
                                     selectedChallenge.code.map((contract, index) =>
                                         <Tab className="text-align-start" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
-                                            <b className="font-size-18">Address: TBD</b>
+                                            <b className="font-size-18">Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b>
                                             <pre><code className="hljs" dangerouslySetInnerHTML={getContractCode(index)}></code></pre>
                                         </Tab>
                                     )

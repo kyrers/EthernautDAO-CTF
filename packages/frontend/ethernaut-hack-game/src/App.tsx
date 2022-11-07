@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from "@ethersproject/providers";
 import { connect } from "./functions/connect";
-import { loadControllerContract/*, loadExistingChallengeInstances*/ } from "./functions/controllerActions";
+import { loadControllerContract } from "./functions/controllerActions";
 import { targetNetwork } from "./config/config";
 import { useEffect, useState } from "react";
 import { strings } from "./utils/strings";
@@ -18,7 +18,7 @@ function App() {
   const [loadingInfo, setLoadingInfo] = useState(true);
   const [creatingInstance, setCreatingInstance] = useState(false);
   const [controller, setController] = useState();
-  const [playerInfo, setPlayerInfo] = useState();
+  const [playerInfo, setPlayerInfo] = useState<any[]>([]);
 
   /*------------------------------------------------------------
                                HOOKS
@@ -29,14 +29,13 @@ function App() {
       const { signer, signerAddress } = await connect();
       setUserSigner(signer);
       setConnectedWallet(signerAddress);
-      //loadInfo(signer);
     }
 
     promptConnect();
   }, []);
 
   useEffect(() => {
-    if (userSigner !== undefined) {
+    if (undefined !== userSigner) {
       initializeStorage(connectedWallet);
       loadContract();
       loadPlayerInfo();
@@ -44,7 +43,6 @@ function App() {
   }, [userSigner]);
 
   useEffect(() => {
-    console.log("PLAYER INFO", playerInfo);
     setLoadingInfo(false);
    }, [playerInfo]);
 
@@ -90,7 +88,7 @@ function App() {
         loadingInfo ?
           <Spinner animation="border" role="status" />
           :
-          <MainPanel creatingInstance={creatingInstance} createInstance={(_challengeId, _factoryAddress) => createInstance(_challengeId, _factoryAddress)} />
+          <MainPanel playerInfo={playerInfo} creatingInstance={creatingInstance} createInstance={(_challengeId, _factoryAddress) => createInstance(_challengeId, _factoryAddress)} />
       }
     </div>
   );

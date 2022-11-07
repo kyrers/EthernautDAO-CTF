@@ -1,7 +1,7 @@
 export const initializeStorage: any = (player: string) => {
     let currentPlayerInfo = localStorage.getItem(player);
 
-    if (currentPlayerInfo === null) {
+    if (null === currentPlayerInfo) {
         localStorage.setItem(player, JSON.stringify([]));
     }
 };
@@ -13,7 +13,7 @@ export const loadPlayerStorage: any = (player: string) => {
 }
 
 export const addChallengeInstance: any = (player: string, instance: any, callback: any) => {
-    if (instance !== undefined) {
+    if (undefined !== instance) {
         let parsedInfo = loadPlayerStorage(player);
         parsedInfo.push(instance);
         localStorage.setItem(player, JSON.stringify(parsedInfo));
