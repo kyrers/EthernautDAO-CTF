@@ -5,6 +5,7 @@ import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
 import "../css/vs2015_dark.css";
+import { CheckCircle, XCircle } from "react-bootstrap-icons";
 
 type FunctionProps = {
     playerInfo: any[];
@@ -69,6 +70,11 @@ function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionPro
         setSelectedChallengePlayerStatus(undefined !== challengeStatus ? challengeStatus : emptyChallengePlayerStatusObject);
     }
 
+    const hasSolvedChallenge = (challengeId: string) => {
+        let challengeStatus = playerInfo.find(progress => progress.challengeId === challengeId);
+        return undefined !== challengeStatus && challengeStatus.solved
+    }
+
 
     /*------------------------------------------------------------
                                  RENDER
@@ -79,7 +85,16 @@ function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionPro
                 <Row key={`challenge-row-${index}`}>
                     {
                         challengesRow.map(challenge =>
-                            <Col key={`challenge-id-${challenge.id}`} className="challenge-card" sm={2} onClick={() => handleSelectedChallenge(challenge)}>{challenge.name}</Col>
+                            <Col key={`challenge-id-${challenge.id}`} className="challenge-card" sm={2} onClick={() => handleSelectedChallenge(challenge)}>
+                                {challenge.name}
+
+                                {
+                                    hasSolvedChallenge(challenge.id) ?
+                                        <CheckCircle className="challenge-status-icon" color="green" />
+                                        :
+                                        <XCircle className="challenge-status-icon" color="red" />
+                        }
+                            </Col>
                         )
                     }
                 </Row>

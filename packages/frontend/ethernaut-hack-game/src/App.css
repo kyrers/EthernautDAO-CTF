@@ -105,6 +105,11 @@
   justify-content: space-between;
 }
 
+.challenge-status-icon {
+  float: right;
+  margin-top: -16px;
+}
+
 /*---------------------*/
 
 /* STYLE */
