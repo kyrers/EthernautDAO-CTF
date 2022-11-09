@@ -9,11 +9,12 @@ import { CheckCircle, XCircle } from "react-bootstrap-icons";
 
 type FunctionProps = {
     playerInfo: any[];
-    creatingInstance: Boolean;
+    updatingInstance: Boolean;
     createInstance: (challengeId: string, factoryAddress: string) => void;
+    validateSolution: (challengeId: string, instanceAddress: string) => void;
 };
 
-function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionProps) {
+function MainPanel({ playerInfo, updatingInstance, createInstance, validateSolution }: FunctionProps) {
     //Placeholders for no selected challenge/ no challenge player status
     const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
     const emptyChallengePlayerStatusObject = { "challengeId": "", "instanceAddress": "", "solved": false };
@@ -93,7 +94,7 @@ function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionPro
                                         <CheckCircle className="challenge-status-icon" color="green" />
                                         :
                                         <XCircle className="challenge-status-icon" color="red" />
-                        }
+                                }
                             </Col>
                         )
                     }
@@ -117,7 +118,7 @@ function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionPro
         return (
             <div>
                 {
-                    loadingCode || creatingInstance ?
+                    loadingCode || updatingInstance ?
                         <Spinner animation="border" role="status" />
                         :
                         <>
@@ -132,7 +133,7 @@ function MainPanel({ playerInfo, creatingInstance, createInstance }: FunctionPro
                                             <span>Create instance</span>
                                         }
                                     </Button>
-                                    <Button className="custom-button" disabled={"" === selectedChallengePlayerStatus.challengeId}>
+                                    <Button className="custom-button" onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId}>
                                         {
                                             <span>Validate solution</span>
                                         }

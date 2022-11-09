@@ -9,14 +9,14 @@ import MainPanel from "./components/MainPanel";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
-import { createChallengeInstance } from "./functions/challengeActions";
+import { createChallengeInstance, validateChallengeSolution } from "./functions/challengeActions";
 import { addChallengeInstance, initializeStorage, loadPlayerStorage } from "./functions/playerActions";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
   const [connectedWallet, setConnectedWallet] = useState("");
   const [loadingInfo, setLoadingInfo] = useState(true);
-  const [creatingInstance, setCreatingInstance] = useState(false);
+  const [updatingInstance, setUpdatingInstance] = useState(false);
   const [controller, setController] = useState();
   const [playerInfo, setPlayerInfo] = useState<any[]>([]);
 
@@ -44,7 +44,7 @@ function App() {
 
   useEffect(() => {
     setLoadingInfo(false);
-   }, [playerInfo]);
+  }, [playerInfo]);
 
 
   /*------------------------------------------------------------
@@ -72,10 +72,17 @@ function App() {
   }
 
   const createInstance = async (challengeId: string, factoryAddress: string) => {
-    setCreatingInstance(true);
+    setUpdatingInstance(true);
     let newInstance = await createChallengeInstance(controller, challengeId, factoryAddress);
     addChallengeInstance(connectedWallet, newInstance, loadPlayerInfo);
-    setCreatingInstance(false);
+    setUpdatingInstance(false);
+  };
+
+  const validateSolution = async (challengeId: string, instanceAddress: string) => {
+    setUpdatingInstance(true);
+    let newInstance = await validateChallengeSolution(controller, challengeId, instanceAddress);
+    addChallengeInstance(connectedWallet, newInstance, loadPlayerInfo);
+    setUpdatingInstance(false);
   };
 
   /*------------------------------------------------------------
@@ -88,7 +95,11 @@ function App() {
         loadingInfo ?
           <Spinner animation="border" role="status" />
           :
-          <MainPanel playerInfo={playerInfo} creatingInstance={creatingInstance} createInstance={(_challengeId, _factoryAddress) => createInstance(_challengeId, _factoryAddress)} />
+          <MainPanel
+            playerInfo={playerInfo}
+            updatingInstance={updatingInstance}
+            createInstance={(_challengeId, _factoryAddress) => createInstance(_challengeId, _factoryAddress)}
+            validateSolution={(_challengeId, _instanceAddress) => validateSolution(_challengeId, _instanceAddress)} />
       }
     </div>
   );

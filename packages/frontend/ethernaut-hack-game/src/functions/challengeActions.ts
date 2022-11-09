@@ -4,7 +4,7 @@ export const createChallengeInstance: any = async (controller: Contract, challen
     try {
         let createTx = await controller.createInstance(factoryAddress);
         let receipt = await createTx.wait();
-        let newInstance = { "challengeId": challengeId, "instanceAddress": receipt.events[0].args[0], "solved": false };
+        let newInstance = { "challengeId": challengeId, "instanceAddress": receipt.events[0].args[1], "solved": false };
         return newInstance;
     } catch (error: any) {
         if (error.code === 4001) {
@@ -12,6 +12,20 @@ export const createChallengeInstance: any = async (controller: Contract, challen
         }
     }
 };
+
+export const validateChallengeSolution: any = async (controller: Contract, challengeId: string, instanceAddress: string) => {
+    try {
+        let createTx = await controller.validateSolution(instanceAddress);
+        let receipt = await createTx.wait();
+        console.log(receipt);
+        //let updatedInstance = { "challengeId": challengeId, "instanceAddress": receipt.events[0].args[0], "solved": false };
+        //return newInstance;
+    } catch (error: any) {
+        if (error.code === 4001) {
+            alert("Please accept the transaction.");
+        }
+    }
+}
 
 //CODE BEING SERVED FROM LOCAL http-server INSTANCE WITH CORS DISABLED. THIS IS FOR DEBUG/DEVELOPMENT ONLY
 export const loadChallengeContractCode: any = (path: any) => {
