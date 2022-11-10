@@ -90,7 +90,7 @@ function App() {
   --------------------------------------------------------------*/
   return (
     <div className="App">
-      <Header name={strings.title} targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
+      <Header name={strings.title} targetNetwork={targetNetwork} connectedWallet={connectedWallet} connect={connect} />
       {
         loadingInfo ?
           <Spinner animation="border" role="status" />

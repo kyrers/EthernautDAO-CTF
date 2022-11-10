@@ -4,7 +4,7 @@ import HelpModal from "./HelpModal";
 
 type FunctionProps = {
     name: string;
-    targetNetwork: string;
+    targetNetwork: any;
     connectedWallet: string;
     connect: MouseEventHandler<HTMLButtonElement>;
 };
@@ -25,7 +25,7 @@ function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps
                             <span>Connect</span>
                     }
                 </Button>
-                <span className="header-target-network">{targetNetwork}</span>
+                <span className="header-target-network" style={{color: targetNetwork.color}}>{targetNetwork.name}</span>
             </div>
         </header>
     );

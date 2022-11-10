@@ -12,14 +12,14 @@ export const NETWORKS = {
         blockExplorer: "",
         rpcUrl: "http://" + window.location.hostname + ":8545",
     },
-    goerli: {
-        name: "Goerli",
-        color: "#3099f2",
-        chainId: 5,
-        rpcUrl: `https://goerli.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`,
-        blockExplorer: "https://goerli.etherscan.io/"
+    "optimistic-goerli": {
+        name: "Optimistic-Goerli",
+        color: "#f01a37",
+        chainId: 420,
+        rpcUrl: `https://opt-goerli.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}`,
+        blockExplorer: "https://goerli-optimism.etherscan.io/"
       }
 };
 
-export const targetNetwork = NETWORKS.localhost;
+export const targetNetwork = NETWORKS["optimistic-goerli"];
 export const contractAddress = process.env.REACT_APP_CONTROLLER_CONTRACT_ADDRESS ?? "";
