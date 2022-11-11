@@ -133,7 +133,7 @@ function MainPanel({ playerInfo, updatingInstance, createInstance, validateSolut
                                             <span>Create instance</span>
                                         }
                                     </Button>
-                                    <Button className="custom-button" onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId}>
+                                    <Button className="custom-button" onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={selectedChallengePlayerStatus.solved}>
                                         {
                                             <span>Validate solution</span>
                                         }

@@ -20,3 +20,10 @@ export const addChallengeInstance: any = (player: string, instance: any, callbac
         callback();
     }
 };
+
+export const setChallengeSolved: any = (player: string, instanceAddress: string, callback: any) => {
+    let parsedInfo: [any] = loadPlayerStorage(player);
+    parsedInfo.find(challenge => challenge.instanceAddress === instanceAddress).solved = true;
+    localStorage.setItem(player, JSON.stringify(parsedInfo));
+    callback();
+}

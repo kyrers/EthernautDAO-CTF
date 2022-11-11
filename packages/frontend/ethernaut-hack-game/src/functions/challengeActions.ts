@@ -17,9 +17,11 @@ export const validateChallengeSolution: any = async (controller: Contract, chall
     try {
         let createTx = await controller.validateSolution(instanceAddress);
         let receipt = await createTx.wait();
-        console.log(receipt);
-        //let updatedInstance = { "challengeId": challengeId, "instanceAddress": receipt.events[0].args[0], "solved": false };
-        //return newInstance;
+        if (0 < receipt.events.length) {
+            return true;
+        }
+        return false;
+
     } catch (error: any) {
         if (error.code === 4001) {
             alert("Please accept the transaction.");

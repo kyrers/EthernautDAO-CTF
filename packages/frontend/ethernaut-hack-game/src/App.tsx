@@ -10,7 +10,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
 import { createChallengeInstance, validateChallengeSolution } from "./functions/challengeActions";
-import { addChallengeInstance, initializeStorage, loadPlayerStorage } from "./functions/playerActions";
+import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved } from "./functions/playerActions";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -80,8 +80,12 @@ function App() {
 
   const validateSolution = async (challengeId: string, instanceAddress: string) => {
     setUpdatingInstance(true);
-    let newInstance = await validateChallengeSolution(controller, challengeId, instanceAddress);
-    addChallengeInstance(connectedWallet, newInstance, loadPlayerInfo);
+
+    let solved = await validateChallengeSolution(controller, challengeId, instanceAddress);
+    if (solved) {
+      setChallengeSolved(connectedWallet, instanceAddress, loadPlayerInfo);
+    }
+
     setUpdatingInstance(false);
   };
 
