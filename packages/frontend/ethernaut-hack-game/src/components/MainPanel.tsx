@@ -51,6 +51,12 @@ function MainPanel({ playerInfo, updatingInstance, createInstance, validateSolut
         }
     }, [selectedChallenge]);
 
+    useEffect(() => {
+        if (!updatingInstance || "" !== selectedChallenge.id) {
+            loadPlayerChallengeProgress(selectedChallenge);
+        }
+    }, [updatingInstance])
+
 
     /*------------------------------------------------------------
                                  FUNCTIONS
@@ -133,7 +139,7 @@ function MainPanel({ playerInfo, updatingInstance, createInstance, validateSolut
                                             <span>Create instance</span>
                                         }
                                     </Button>
-                                    <Button className="custom-button" onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={selectedChallengePlayerStatus.solved}>
+                                    <Button className="custom-button" onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId || selectedChallengePlayerStatus.solved}>
                                         {
                                             <span>Validate solution</span>
                                         }
