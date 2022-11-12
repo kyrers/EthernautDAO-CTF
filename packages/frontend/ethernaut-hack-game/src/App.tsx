@@ -8,14 +8,15 @@ import Header from "./components/Header";
 import MainPanel from "./components/MainPanel";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Spinner } from "react-bootstrap";
 import { createChallengeInstance, validateChallengeSolution } from "./functions/challengeActions";
 import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved } from "./functions/playerActions";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
   const [connectedWallet, setConnectedWallet] = useState("");
   const [loadingInfo, setLoadingInfo] = useState(true);
+  const [loadingCode, setLoadingCode] = useState(true);
   const [updatingInstance, setUpdatingInstance] = useState(false);
   const [controller, setController] = useState();
   const [playerInfo, setPlayerInfo] = useState<any[]>([]);
@@ -40,6 +41,8 @@ function App() {
       loadContract();
       loadPlayerInfo();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSigner]);
 
   useEffect(() => {
@@ -95,16 +98,17 @@ function App() {
   return (
     <div className="App">
       <Header name={strings.title} targetNetwork={targetNetwork} connectedWallet={connectedWallet} connect={connect} />
-      {
-        loadingInfo ?
-          <Spinner animation="border" role="status" />
-          :
-          <MainPanel
-            playerInfo={playerInfo}
-            updatingInstance={updatingInstance}
-            createInstance={(_challengeId, _factoryAddress) => createInstance(_challengeId, _factoryAddress)}
-            validateSolution={(_challengeId, _instanceAddress) => validateSolution(_challengeId, _instanceAddress)} />
-      }
+
+      <LoadingScreen show={loadingInfo || updatingInstance || loadingCode} />
+
+      <MainPanel
+        playerInfo={playerInfo}
+        updatingInstance={updatingInstance}
+        loadingCode={loadingCode}
+        allowClicks={!loadingInfo && !updatingInstance && !loadingCode}
+        setLoadingCode={setLoadingCode}
+        createInstance={createInstance}
+        validateSolution={validateSolution} />
     </div>
   );
 }
