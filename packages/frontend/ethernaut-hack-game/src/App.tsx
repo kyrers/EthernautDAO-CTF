@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createChallengeInstance, validateChallengeSolution } from "./functions/challengeActions";
 import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved } from "./functions/playerActions";
 import LoadingScreen from "./components/LoadingScreen";
+import AlertScreen from "./components/AlertScreen";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -18,6 +19,10 @@ function App() {
   const [loadingInfo, setLoadingInfo] = useState(true);
   const [loadingCode, setLoadingCode] = useState(true);
   const [updatingInstance, setUpdatingInstance] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState("");
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertText, setAlertText] = useState("");
   const [controller, setController] = useState();
   const [playerInfo, setPlayerInfo] = useState<any[]>([]);
 
@@ -74,9 +79,16 @@ function App() {
     setPlayerInfo(playerStatus);
   }
 
+  const displayAlert = (type: string, title: string, text: string) => {
+    setAlertType(type);
+    setAlertTitle(title);
+    setAlertText(text);
+    setShowAlert(true);
+  }
+
   const createInstance = async (challengeId: string, factoryAddress: string) => {
     setUpdatingInstance(true);
-    let newInstance = await createChallengeInstance(controller, challengeId, factoryAddress);
+    let newInstance = await createChallengeInstance(controller, challengeId, factoryAddress, displayAlert);
     addChallengeInstance(connectedWallet, newInstance, loadPlayerInfo);
     setUpdatingInstance(false);
   };
@@ -84,12 +96,13 @@ function App() {
   const validateSolution = async (challengeId: string, instanceAddress: string) => {
     setUpdatingInstance(true);
 
-    let solved = await validateChallengeSolution(controller, challengeId, instanceAddress);
+    let solved = await validateChallengeSolution(controller, challengeId, instanceAddress, displayAlert);
     if (solved) {
       setChallengeSolved(connectedWallet, instanceAddress, loadPlayerInfo);
     }
 
     setUpdatingInstance(false);
+    
   };
 
   /*------------------------------------------------------------
@@ -101,6 +114,8 @@ function App() {
 
       <LoadingScreen show={loadingInfo || updatingInstance || loadingCode} />
 
+      <AlertScreen show={showAlert} type={alertType} title={alertTitle} text={alertText} setShow={setShowAlert} />
+
       <MainPanel
         playerInfo={playerInfo}
         updatingInstance={updatingInstance}
@@ -108,7 +123,8 @@ function App() {
         allowClicks={!loadingInfo && !updatingInstance && !loadingCode}
         setLoadingCode={setLoadingCode}
         createInstance={createInstance}
-        validateSolution={validateSolution} />
+        validateSolution={validateSolution} 
+        displayAlert={(_type, _title, _text) => displayAlert(_type, _title, _text)} />
     </div>
   );
 }

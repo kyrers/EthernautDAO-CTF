@@ -15,9 +15,10 @@ type FunctionProps = {
     setLoadingCode: Dispatch<SetStateAction<boolean>>;
     createInstance: (challengeId: string, factoryAddress: string) => void;
     validateSolution: (challengeId: string, instanceAddress: string) => void;
+    displayAlert: (type: string, title: string, text: string) => void;
 };
 
-function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, setLoadingCode, createInstance, validateSolution }: FunctionProps) {
+function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, setLoadingCode, createInstance, validateSolution, displayAlert }: FunctionProps) {
     //Placeholders for no selected challenge/ no challenge player status
     const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
     const emptyChallengePlayerStatusObject = { "challengeId": "", "instanceAddress": "", "solved": false };
@@ -32,7 +33,7 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
     --------------------------------------------------------------*/
     useEffect(() => {
         const loadCode = async (filePath: string) => {
-            return await loadChallengeContractCode(filePath);
+            return await loadChallengeContractCode(filePath, displayAlert);
         };
 
         if ("" !== selectedChallenge.id) {

@@ -31,6 +31,20 @@
   background: rgba(119, 136, 153, 0.5);
 }
 
+.error-alert {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 50%;
+  position: fixed;
+  align-items: center;
+}
+
+.error-alert .btn-close:focus {
+  box-shadow: none;
+}
+
 .custom-spinner {
   height: 100px !important;
   width: 100px !important;
