@@ -21,6 +21,17 @@
   color: white;
 }
 
+.App-footer {
+  color: #585f69;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 .loading-screen {
   display: flex;
   justify-content: center;
@@ -56,20 +67,19 @@
   align-items: center;
 }
 
-.custom-button {
-  border-radius: 10px !important;
-  background-color: rgba(33, 35, 40, 255) !important;
-  border: 1px solid gray !important;
+.App .btn-primary {
+  border: 0;
+  color: black;
+  outline: none;
   cursor: pointer;
+  padding: 10px 24px;
+  border-radius: 32px;
+  background: linear-gradient(97.42deg,#cdffe6,#8fdeff 94.24%);
 }
 
-.custom-button:hover {
-  background-color: #5c636a !important;
-}
-
-.connect-button {
-  min-height: 35px;
-  min-width: 100px;
+.App .btn:hover {
+  color: black;
+  background: linear-gradient(194.84deg,#cdffe6,#8fdeff 94.24%);
 }
 
 .info-button {

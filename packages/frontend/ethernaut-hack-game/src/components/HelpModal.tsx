@@ -17,7 +17,7 @@ function HelpModal() {
                 </Modal.Header>
                 <Modal.Body className="white-space-break-spaces">{strings.helpText}</Modal.Body>
                 <Modal.Footer>
-                    <Button className="custom-button" variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleClose}>
                         Got it
                     </Button>
                 </Modal.Footer>

@@ -12,6 +12,7 @@ import { createChallengeInstance, validateChallengeSolution } from "./functions/
 import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved } from "./functions/playerActions";
 import LoadingScreen from "./components/LoadingScreen";
 import AlertScreen from "./components/AlertScreen";
+import Footer from "./components/Footer";
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -125,6 +126,8 @@ function App() {
         createInstance={createInstance}
         validateSolution={validateSolution} 
         displayAlert={(_type, _title, _text) => displayAlert(_type, _title, _text)} />
+
+        <Footer />
     </div>
   );
 }

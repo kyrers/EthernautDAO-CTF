@@ -17,12 +17,12 @@ function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps
                 <HelpModal />
             </div>
             <div className="wallet-panel">
-                <Button className="custom-button connect-button" onClick={connect}>
+                <Button onClick={connect}>
                     {
                         connectedWallet !== "" ?
                             <span>{connectedWallet}</span>
                             :
-                            <span>Connect</span>
+                            <span>Connect wallet</span>
                     }
                 </Button>
                 <span className="header-target-network" style={{color: targetNetwork.color}}>{targetNetwork.name}</span>

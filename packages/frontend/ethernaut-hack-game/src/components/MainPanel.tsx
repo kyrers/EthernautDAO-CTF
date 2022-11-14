@@ -136,12 +136,12 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
                         <h1 className="margin-left-20">{selectedChallenge.name}</h1>
                     </div>
                     <div className="d-inline-flex">
-                        <Button className="custom-button margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={"" !== selectedChallengePlayerStatus.challengeId}>
+                        <Button className="margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={"" !== selectedChallengePlayerStatus.challengeId}>
                             {
                                 <span>Create instance</span>
                             }
                         </Button>
-                        <Button className="custom-button" onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId || selectedChallengePlayerStatus.solved}>
+                        <Button onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId || selectedChallengePlayerStatus.solved}>
                             {
                                 <span>Validate solution</span>
                             }
