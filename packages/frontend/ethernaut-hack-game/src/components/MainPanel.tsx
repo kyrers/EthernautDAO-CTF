@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Row, Col, Tabs, Tab, Button } from "react-bootstrap";
+import { CheckCircle, XCircle } from "react-bootstrap-icons";
 import { loadChallengeContractCode } from "../functions/challengeActions";
 import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
 import BackButton from "./BackButton";
 import "../css/vs2015_dark.css";
-import { CheckCircle, XCircle } from "react-bootstrap-icons";
 
 type FunctionProps = {
     playerInfo: any[];
@@ -127,9 +127,7 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
         }
 
         return (
-            <div>
-                {/*<LoadingScreen show={loadingCode || updatingInstance} />*/}
-
+            <>
                 <div className="challenge-details-header">
                     <div className="d-inline-flex">
                         <BackButton callback={handleBackButtonClick} />
@@ -154,13 +152,14 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
                         selectedChallenge.code.map((contract, index) =>
                             <Tab className="text-align-start" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
                                 <b className="font-size-18">Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b>
-                                <pre><code className="hljs" dangerouslySetInnerHTML={getContractCode(index)}></code></pre>
+                                <pre className="contract-code-container">
+                                    <code className="hljs" dangerouslySetInnerHTML={getContractCode(index)} />
+                                </pre>
                             </Tab>
                         )
                     }
                 </Tabs>
-
-            </div>
+            </>
         )
     }
 
