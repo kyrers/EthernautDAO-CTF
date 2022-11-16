@@ -2,7 +2,10 @@
 .App {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(25deg, #d4376e -40%, #073d61 100%);
+  background-image: url("assets/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   text-align: center;
   min-height: 100vh;
   color: white;
