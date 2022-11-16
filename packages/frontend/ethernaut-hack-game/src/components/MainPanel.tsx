@@ -150,7 +150,7 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
                 <Tabs id="code-tabs" className="mb-3">
                     {
                         selectedChallenge.code.map((contract, index) =>
-                            <Tab className="text-align-start" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
+                            <Tab className="contract-tab" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
                                 <b className="font-size-18">Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b>
                                 <pre className="contract-code-container">
                                     <code className="hljs" dangerouslySetInnerHTML={getContractCode(index)} />
