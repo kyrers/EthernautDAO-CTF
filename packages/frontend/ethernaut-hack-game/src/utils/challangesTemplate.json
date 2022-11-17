@@ -3,17 +3,17 @@
         [
             {
                 "id": 1,
-                "name": "Contract Name",
+                "name": "Challenge 1",
                 "factory": "Factory Address",
                 "description": "",
                 "code": [
                     {
                         "contractName": "ChallengeContract1.sol",
-                        "filePath": "ChallengeContract1ArtifactAddress"
+                        "filePath": "ChallengeContract1ArtifactPath"
                     },
                     {
                         "contractName": "ChallengeContract2.sol",
-                        "filePath": "ChallengeContract2ArtifactAddress"
+                        "filePath": "ChallengeContract2ArtifactPath"
                     }
                 ]
             },
