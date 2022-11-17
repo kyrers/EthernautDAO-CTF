@@ -103,7 +103,6 @@ function App() {
     }
 
     setUpdatingInstance(false);
-    
   };
 
   /*------------------------------------------------------------
@@ -124,10 +123,10 @@ function App() {
         allowClicks={!loadingInfo && !updatingInstance && !loadingCode}
         setLoadingCode={setLoadingCode}
         createInstance={createInstance}
-        validateSolution={validateSolution} 
+        validateSolution={validateSolution}
         displayAlert={(_type, _title, _text) => displayAlert(_type, _title, _text)} />
 
-        <Footer />
+      <Footer />
     </div>
   );
 }

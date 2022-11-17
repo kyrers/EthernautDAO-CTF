@@ -26,7 +26,6 @@
 }
 
 .App-footer {
-  color: #585f69;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,6 +162,10 @@
   display: flex;
   flex-direction: column;
   max-height: 89%;
+}
+
+.App .nav-link, .App .nav-link:hover  {
+  color: white;
 }
 
 .contract-tab {

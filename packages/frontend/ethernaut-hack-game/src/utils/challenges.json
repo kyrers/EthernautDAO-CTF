@@ -3,13 +3,17 @@
         [
             {
                 "id": 1,
-                "name": "Private Data",
-                "factory": "0x26B3010E549962fe8b69ae4cab1797566d399f14",
+                "name": "Contract Name",
+                "factory": "Factory Address",
                 "description": "",
                 "code": [
                     {
-                        "contractName": "PrivateData.sol",
-                        "filePath": "PrivateData/PrivateData.sol"
+                        "contractName": "ChallengeContract1.sol",
+                        "filePath": "challengeContractAddress"
+                    },
+                    {
+                        "contractName": "ChallengeContract2.sol",
+                        "filePath": "challengeContract2Address"
                     }
                 ]
             },
