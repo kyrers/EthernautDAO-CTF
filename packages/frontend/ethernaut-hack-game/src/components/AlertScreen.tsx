@@ -13,12 +13,14 @@ type FunctionProps = {
 function AlertScreen({ show, type, title, text, setShow }: FunctionProps) {
     return (
         show ?
-            <Alert className="error-alert" variant={type} onClose={() => setShow(false)} dismissible>
-                <Alert.Heading>{title}</Alert.Heading>
-                <p>
-                    {text}
-                </p>
-            </Alert>
+            <div className="alert-screen">
+                <Alert variant={type} onClose={() => setShow(false)} dismissible>
+                    <Alert.Heading>{title}</Alert.Heading>
+                    <p>
+                        {text}
+                    </p>
+                </Alert>
+            </div>
             :
             <></>
     );

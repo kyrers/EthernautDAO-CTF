@@ -46,13 +46,21 @@
   background: rgba(119, 136, 153, 0.5);
 }
 
-.error-alert {
+.alert-screen {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.alert-screen .alert {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-self: center;
+  align-self: start;
   width: 50%;
-  position: fixed;
+  margin-top: 5rem;
   align-items: center;
 }
 
