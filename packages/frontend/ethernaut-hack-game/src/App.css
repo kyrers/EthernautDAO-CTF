@@ -75,7 +75,7 @@
 }
 
 .app-info-panel {
-  display: flex;
+  margin-left: 1rem;
   align-items: center;
 }
 

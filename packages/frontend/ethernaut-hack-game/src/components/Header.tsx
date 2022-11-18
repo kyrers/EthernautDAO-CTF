@@ -1,6 +1,7 @@
 import { MouseEventHandler } from "react";
 import { Button } from "react-bootstrap";
 import HelpModal from "./HelpModal";
+import logo from "../assets/logo.png";
 
 type FunctionProps = {
     name: string;
@@ -13,7 +14,9 @@ function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps
     return (
         <header className="App-header">
             <div className="app-info-panel">
-                <span className="app-title">{name}</span>
+                <a href="https://mint.ethernautdao.io/" target="_blank" rel="noopener noreferrer">
+                    <img src={logo} />
+                </a>
                 <HelpModal />
             </div>
             <div className="wallet-panel">
@@ -25,7 +28,7 @@ function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps
                             <span>Connect wallet</span>
                     }
                 </Button>
-                <span className="header-target-network" style={{color: targetNetwork.color}}>{targetNetwork.name}</span>
+                <span className="header-target-network" style={{ color: targetNetwork.color }}>{targetNetwork.name}</span>
             </div>
         </header>
     );
