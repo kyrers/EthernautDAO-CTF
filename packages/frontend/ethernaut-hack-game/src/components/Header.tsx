@@ -19,6 +19,7 @@ function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps
                 </a>
                 <HelpModal />
             </div>
+            
             <div className="wallet-panel">
                 <Button onClick={connect}>
                     {

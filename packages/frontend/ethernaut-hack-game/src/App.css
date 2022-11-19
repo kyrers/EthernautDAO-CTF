@@ -188,6 +188,28 @@
   height: 70vh;
 }
 
+.social-icon {
+  color: white;
+  margin-right: 10px;
+}
+
+.footer-brands {
+  display: flex;
+  flex-direction: row;
+}
+
+.ethernaut-footer {
+  color: white;
+  text-decoration: none;
+  font-size: larger;
+  margin-left: 50px;
+}
+
+.ethernaut-footer:hover {
+  color: white !important;
+  text-decoration: none !important;
+}
+
 /*---------------------*/
 
 /* STYLE */
