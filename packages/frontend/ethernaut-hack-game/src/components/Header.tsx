@@ -4,22 +4,23 @@ import HelpModal from "./HelpModal";
 import logo from "../assets/logo.png";
 
 type FunctionProps = {
-    name: string;
     targetNetwork: any;
     connectedWallet: string;
     connect: MouseEventHandler<HTMLButtonElement>;
 };
 
-function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps) {
+function Header({ targetNetwork, connectedWallet, connect }: FunctionProps) {
+    const handleLogoClick = () => {
+        //history.pushState("/");
+    }
+
     return (
         <header className="App-header">
             <div className="app-info-panel">
-                <a href="https://mint.ethernautdao.io/" target="_blank" rel="noopener noreferrer">
-                    <img src={logo} />
-                </a>
+                <img src={logo} onClick={handleLogoClick} />
                 <HelpModal />
             </div>
-            
+
             <div className="wallet-panel">
                 <Button onClick={connect}>
                     {

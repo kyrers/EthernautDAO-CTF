@@ -36,6 +36,30 @@
   height: 5vh;
 }
 
+.App .btn-primary {
+  border: 0;
+  color: black;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 24px;
+  border-radius: 32px;
+  background: linear-gradient(97.42deg, #cdffe6, #8fdeff 94.24%);
+}
+
+.App .btn:hover {
+  color: black;
+  background: linear-gradient(194.84deg, #cdffe6, #8fdeff 94.24%);
+}
+
+.App .nav-link,
+.App .nav-link:hover {
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
 .loading-screen {
   display: flex;
   justify-content: center;
@@ -47,11 +71,11 @@
 }
 
 .alert-screen {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    position: fixed;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
 }
 
 .alert-screen .alert {
@@ -79,21 +103,6 @@
   align-items: center;
 }
 
-.App .btn-primary {
-  border: 0;
-  color: black;
-  outline: none;
-  cursor: pointer;
-  padding: 10px 24px;
-  border-radius: 32px;
-  background: linear-gradient(97.42deg,#cdffe6,#8fdeff 94.24%);
-}
-
-.App .btn:hover {
-  color: black;
-  background: linear-gradient(194.84deg,#cdffe6,#8fdeff 94.24%);
-}
-
 .info-button {
   height: 30px;
   cursor: pointer;
@@ -118,7 +127,8 @@
   color: #e0d068
 }
 
-.main-panel {
+.main-panel,
+.challenge-details-panel {
   display: flex;
   flex-direction: column;
   padding: 25px;
@@ -131,8 +141,10 @@
   margin-bottom: 25px;
 }
 
-.App-link {
-  color: #61dafb;
+.challenge-details-panel .tab-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 89%;
 }
 
 .modal-content {
@@ -164,16 +176,6 @@
 .challenge-status-icon {
   float: right;
   margin-top: -16px;
-}
-
-.main-panel .tab-content {
-  display: flex;
-  flex-direction: column;
-  max-height: 89%;
-}
-
-.App .nav-link, .App .nav-link:hover  {
-  color: white;
 }
 
 .contract-tab {

@@ -1,83 +1,23 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Row, Col, Tabs, Tab, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { CheckCircle, XCircle } from "react-bootstrap-icons";
-import { loadChallengeContractCode } from "../functions/challengeActions";
-import hljs from "highlight.js/lib/core";
 import data from "../utils/challenges.json";
-import BackButton from "./BackButton";
-import "../css/vs2015_dark.css";
 
 type FunctionProps = {
     playerInfo: any[];
-    updatingInstance: boolean;
-    loadingCode: boolean;
     allowClicks: boolean;
-    setLoadingCode: Dispatch<SetStateAction<boolean>>;
-    createInstance: (challengeId: string, factoryAddress: string) => void;
-    validateSolution: (challengeId: string, instanceAddress: string) => void;
-    displayAlert: (type: string, title: string, text: string) => void;
+    handleSelectedChallenge: (challenge: any) => void;
 };
 
-function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, setLoadingCode, createInstance, validateSolution, displayAlert }: FunctionProps) {
-    //Placeholders for no selected challenge/ no challenge player status
-    const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
-    const emptyChallengePlayerStatusObject = { "challengeId": "", "instanceAddress": "", "solved": false };
-
-    const [selectedChallenge, setSelectedChallenge] = useState(emptyChallengeObject);
-    const [selectedChallengeContractsCode, setSelectedChallengeContractsCode] = useState<any[]>([]);
-    const [selectedChallengePlayerStatus, setSelectedChallengePlayerStatus] = useState(emptyChallengePlayerStatusObject);
-
-
-    /*------------------------------------------------------------
-                                 HOOKS
-    --------------------------------------------------------------*/
-    useEffect(() => {
-        const loadCode = async (filePath: string) => {
-            return await loadChallengeContractCode(filePath, displayAlert);
-        };
-
-        if ("" !== selectedChallenge.id) {
-            let loadedCode: any[] = [];
-            let promises: any[] = [];
-
-            selectedChallenge.code.forEach(contract => {
-                promises.push(loadCode(contract.filePath).then(result => loadedCode.push(result)));
-            });
-
-            Promise.all(promises).then(_ => {
-                setSelectedChallengeContractsCode(loadedCode);
-                setLoadingCode(false);
-            });
-
-        } else {
-            setLoadingCode(false);
-        }
-    }, [selectedChallenge]);
-
-    useEffect(() => {
-        if (!updatingInstance || "" !== selectedChallenge.id) {
-            loadPlayerChallengeProgress(selectedChallenge);
-        }
-    }, [updatingInstance])
-
+function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: FunctionProps) {
+    const navigate = useNavigate();
 
     /*------------------------------------------------------------
                                  FUNCTIONS
     --------------------------------------------------------------*/
-    const handleBackButtonClick = () => {
-        setSelectedChallenge(emptyChallengeObject);
-        setSelectedChallengePlayerStatus(emptyChallengePlayerStatusObject);
-    }
-
-    const handleSelectedChallenge = (challenge: any) => {
-        setLoadingCode(true);
-        setSelectedChallenge(challenge);
-        loadPlayerChallengeProgress(challenge)
-    }
-
-    const loadPlayerChallengeProgress = (challenge: any) => {
-        let challengeStatus = playerInfo.find(progress => progress.challengeId === challenge.id);
-        setSelectedChallengePlayerStatus(undefined !== challengeStatus ? challengeStatus : emptyChallengePlayerStatusObject);
+    const handleColClick = (challenge: any) => {
+        handleSelectedChallenge(challenge);
+        navigate(`challenge/${challenge.name}`);
     }
 
     const hasSolvedChallenge = (challengeId: string) => {
@@ -95,7 +35,7 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
                 <Row key={`challenge-row-${index}`}>
                     {
                         challengesRow.map(challenge =>
-                            <Col key={`challenge-id-${challenge.id}`} className={`challenge-card ${allowClicks ? "" : "pointer-events-none"}`} sm={2} onClick={() => handleSelectedChallenge(challenge)}>
+                            <Col key={`challenge-id-${challenge.id}`} className={`challenge-card ${allowClicks ? "" : "pointer-events-none"}`} sm={2} onClick={() => handleColClick(challenge)}>
                                 {challenge.name}
 
                                 {
@@ -116,61 +56,9 @@ function MainPanel({ playerInfo, updatingInstance, loadingCode, allowClicks, set
         );
     }
 
-
-    const renderChallengeDetails = () => {
-        const getContractCode = (index: number) => {
-            if (!loadingCode) {
-                return {
-                    __html: hljs.highlight(selectedChallengeContractsCode[index], { language: "solidity" }).value
-                }
-            }
-        }
-
-        return (
-            <>
-                <div className="challenge-details-header">
-                    <div className="d-inline-flex">
-                        <BackButton callback={handleBackButtonClick} />
-                        <h1 className="margin-left-20">{selectedChallenge.name}</h1>
-                    </div>
-                    <div className="d-inline-flex">
-                        <Button className="margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={"" !== selectedChallengePlayerStatus.challengeId}>
-                            {
-                                <span>Create instance</span>
-                            }
-                        </Button>
-                        <Button onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId || selectedChallengePlayerStatus.solved}>
-                            {
-                                <span>Validate solution</span>
-                            }
-                        </Button>
-                    </div>
-                </div>
-
-                <Tabs id="code-tabs" className="mb-3">
-                    {
-                        selectedChallenge.code.map((contract, index) =>
-                            <Tab className="contract-tab" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
-                                <b className="font-size-18">Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b>
-                                <pre className="contract-code-container">
-                                    <code className="hljs" dangerouslySetInnerHTML={getContractCode(index)} />
-                                </pre>
-                            </Tab>
-                        )
-                    }
-                </Tabs>
-            </>
-        )
-    }
-
     return (
         <div className="main-panel">
-            {
-                "" === selectedChallenge.id ?
-                    renderChallenges()
-                    :
-                    renderChallengeDetails()
-            }
+            {renderChallenges()}
         </div>
     );
 }
