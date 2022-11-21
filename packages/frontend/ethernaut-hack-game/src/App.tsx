@@ -121,13 +121,13 @@ function App() {
   --------------------------------------------------------------*/
   return (
     <div className="App">
-      <Header targetNetwork={targetNetwork} connectedWallet={connectedWallet} connect={connect} />
-
-      <LoadingScreen show={loadingInfo || updatingInstance || loadingCode} />
-
-      <AlertScreen show={showAlert} type={alertType} title={alertTitle} text={alertText} setShow={setShowAlert} />
-
       <BrowserRouter>
+        <Header targetNetwork={targetNetwork} connectedWallet={connectedWallet} connect={connect} />
+
+        <LoadingScreen show={loadingInfo || updatingInstance || loadingCode} />
+
+        <AlertScreen show={showAlert} type={alertType} title={alertTitle} text={alertText} setShow={setShowAlert} />
+
         <Routes>
 
           <Route path="/" element={
@@ -152,9 +152,10 @@ function App() {
           } />
 
         </Routes>
+
+        <Footer footerText={strings.footerText} />
       </BrowserRouter>
 
-      <Footer footerText={strings.footerText} />
     </div>
   );
 }

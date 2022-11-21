@@ -2,6 +2,7 @@ import { MouseEventHandler } from "react";
 import { Button } from "react-bootstrap";
 import HelpModal from "./HelpModal";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 type FunctionProps = {
     targetNetwork: any;
@@ -10,14 +11,16 @@ type FunctionProps = {
 };
 
 function Header({ targetNetwork, connectedWallet, connect }: FunctionProps) {
+    const navigate = useNavigate();
+
     const handleLogoClick = () => {
-        //history.pushState("/");
+        navigate("/");
     }
 
     return (
         <header className="App-header">
             <div className="app-info-panel">
-                <img src={logo} onClick={handleLogoClick} />
+                <img className="cursor-pointer" src={logo} onClick={handleLogoClick} />
                 <HelpModal />
             </div>
 

@@ -1,7 +1,7 @@
 declare module "highlightjs-solidity";
 
 interface Window {
-    ethereum: any
+    ethereum: any;
 }
 
 declare module "*.png" {
