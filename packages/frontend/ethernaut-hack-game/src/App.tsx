@@ -15,6 +15,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import AlertScreen from "./components/AlertScreen";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NotFound from "./components/NotFound";
 
 function App() {
   //Placeholder for no selected challenge
@@ -150,6 +151,8 @@ function App() {
               validateSolution={validateSolution}
               displayAlert={displayAlert} />
           } />
+
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
 
