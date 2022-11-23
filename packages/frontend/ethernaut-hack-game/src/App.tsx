@@ -3,7 +3,7 @@ import { JsonRpcSigner } from "@ethersproject/providers";
 import { connect } from "./functions/connect";
 import { loadControllerContract } from "./functions/controllerActions";
 import { createChallengeInstance, validateChallengeSolution } from "./functions/challengeActions";
-import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved } from "./functions/playerActions";
+import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved, storeSelectedChallenge } from "./functions/playerActions";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { targetNetwork } from "./config/config";
 import { strings } from "./utils/strings";
@@ -83,8 +83,14 @@ function App() {
   };
 
   const loadPlayerInfo = () => {
-    let playerStatus = loadPlayerStorage(connectedWallet);
+    const { playerStatus, sessionStatus } = loadPlayerStorage(connectedWallet);
+
     setPlayerInfo(playerStatus);
+
+    if (null !== sessionStatus && "" !== sessionStatus.id) {
+      setLoadingCode(true);
+      setSelectedChallenge(sessionStatus);
+    }
   }
 
   const displayAlert = (type: string, title: string, text: string) => {
@@ -114,6 +120,7 @@ function App() {
 
   const handleSelectedChallenge = (challenge: any) => {
     setLoadingCode(true);
+    storeSelectedChallenge(challenge);
     setSelectedChallenge(challenge);
   };
 

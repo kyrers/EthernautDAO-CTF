@@ -5,6 +5,7 @@ import { loadChallengeContractCode } from "../functions/challengeActions";
 import hljs from "highlight.js/lib/core";
 import BackButton from "./BackButton";
 import "../css/vs2015_dark.css";
+import { storeSelectedChallenge } from "../functions/playerActions";
 
 type FunctionProps = {
     selectedChallenge: any;
@@ -12,7 +13,7 @@ type FunctionProps = {
     loadingInfo: boolean;
     updatingInstance: boolean;
     loadingCode: boolean;
-    setSelectedChallenge: Dispatch<SetStateAction<any>>;
+    setSelectedChallenge: Dispatch<SetStateAction<any>>
     setLoadingCode: Dispatch<SetStateAction<boolean>>;
     createInstance: (challengeId: string, factoryAddress: string) => void;
     validateSolution: (challengeId: string, instanceAddress: string) => void;
@@ -30,6 +31,7 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
     const [selectedChallengePlayerStatus, setSelectedChallengePlayerStatus] = useState(emptyChallengePlayerStatusObject);
 
     useEffect(() => {
+        console.log("## LOADING CODE")
         const loadCode = async (filePath: string) => {
             return await loadChallengeContractCode(filePath, displayAlert);
         };
@@ -50,17 +52,22 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
         } else {
             setLoadingCode(false);
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedChallenge]);
 
     useEffect(() => {
         if (!updatingInstance || "" !== selectedChallenge.id) {
             loadPlayerChallengeProgress(selectedChallenge);
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatingInstance])
 
     const handleBackButtonClick = () => {
         setSelectedChallenge(emptyChallengeObject);
         setSelectedChallengePlayerStatus(emptyChallengePlayerStatusObject);
+        storeSelectedChallenge(emptyChallengeObject);
         navigate("/");
     };
 
