@@ -276,6 +276,14 @@
 
 /*---------------------*/
 
+/* MEDIA */
+
+@media (max-width: 591px) {
+  .footer-brands {
+    flex-direction: column;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
