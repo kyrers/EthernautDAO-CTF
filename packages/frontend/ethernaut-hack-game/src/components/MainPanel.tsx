@@ -35,15 +35,12 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
                 <Row key={`challenge-row-${index}`}>
                     {
                         challengesRow.map(challenge =>
-                            <Col key={`challenge-id-${challenge.id}`} className={`challenge-card ${allowClicks ? "" : "pointer-events-none"}`} sm={2} onClick={() => handleColClick(challenge)}>
-                                {challenge.name}
+                            <Col key={`challenge-id-${challenge.id}`} sm={2}
+                                className={`challenge-card ${hasSolvedChallenge(challenge.id) ? "solved-background" : "unsolved-background"} ${allowClicks ? "" : "pointer-events-none"}`}
+                                onClick={() => handleColClick(challenge)}>
 
-                                {
-                                    hasSolvedChallenge(challenge.id) ?
-                                        <CheckCircle className="challenge-status-icon" color="green" />
-                                        :
-                                        <XCircle className="challenge-status-icon" color="red" />
-                                }
+                                <span>{challenge.name}</span>
+
                             </Col>
                         )
                     }
