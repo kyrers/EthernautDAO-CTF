@@ -46,7 +46,6 @@ export const loadChallengeContractCode: any = (path: any, displayAlert: (type: s
                 .then(text => resolve(text))
         }
         catch (error) {
-            console.log(`ERROR LOADING FILE:`, error)
             reject(error)
             displayAlert("danger", "Error", "Something went wrong. Please try again.");
         }

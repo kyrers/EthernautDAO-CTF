@@ -26,7 +26,7 @@ function Footer({ footerText }: FunctionProps) {
 
             <div className="footer-brands">
                 <a href="https://www.openzeppelin.com/" target="_blank" rel="noopener noreferrer">
-                    <img src={ozLogo} />
+                    <img src={ozLogo} alt="Open Zeppelin"/>
                 </a>
                 <a className="ethernaut-footer" href="https://mint.ethernautdao.io/" target="_blank" rel="noopener noreferrer">
                     <p>{footerText}</p>

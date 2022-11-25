@@ -1,6 +1,5 @@
 import { Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle, XCircle } from "react-bootstrap-icons";
 import data from "../utils/challenges.json";
 
 type FunctionProps = {
@@ -21,6 +20,10 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
     }
 
     const hasSolvedChallenge = (challengeId: string) => {
+        if (null === playerInfo) {
+            return false;
+        }
+
         let challengeStatus = playerInfo.find(progress => progress.challengeId === challengeId);
         return undefined !== challengeStatus && challengeStatus.solved
     }

@@ -3,7 +3,7 @@ import { JsonRpcSigner } from "@ethersproject/providers";
 import { connect } from "./functions/connect";
 import { loadControllerContract } from "./functions/controllerActions";
 import { createChallengeInstance, validateChallengeSolution } from "./functions/challengeActions";
-import { addChallengeInstance, initializeStorage, loadPlayerStorage, setChallengeSolved, storeSelectedChallenge } from "./functions/playerActions";
+import { addChallengeInstance, initializeStorage, loadPlayerStorage, loadSessionStorage, setChallengeSolved, storeSelectedChallenge } from "./functions/playerActions";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { targetNetwork } from "./config/config";
 import { strings } from "./utils/strings";
@@ -40,7 +40,7 @@ function App() {
   //Connect user wallet & load contract info
   useEffect(() => {
     const promptConnect = async () => {
-      const { signer, signerAddress } = await connect();
+      const { signer, signerAddress } = await connect(displayAlert);
       setUserSigner(signer);
       setConnectedWallet(signerAddress);
     }
@@ -49,11 +49,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (undefined !== userSigner) {
-      initializeStorage(connectedWallet);
-      loadContract();
-      loadPlayerInfo();
-    }
+    initializeStorage(connectedWallet);
+    loadContract();
+    loadPlayerInfo();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSigner]);
@@ -66,15 +64,17 @@ function App() {
   /*------------------------------------------------------------
                                  FUNCTIONS
   --------------------------------------------------------------*/
-  //Listen to wallet changes
-  window.ethereum.on('accountsChanged', () => {
-    window.location.reload();
-  });
+  if (undefined !== window.ethereum) {
+    //Listen to wallet changes
+    window.ethereum.on('accountsChanged', () => {
+      window.location.reload();
+    });
 
-  //Listen to network changes
-  window.ethereum.on('chainChanged', () => {
-    window.location.reload();
-  });
+    //Listen to network changes
+    window.ethereum.on('chainChanged', () => {
+      window.location.reload();
+    });
+  }
   //-------
 
   const loadContract = async () => {
@@ -83,7 +83,8 @@ function App() {
   };
 
   const loadPlayerInfo = () => {
-    const { playerStatus, sessionStatus } = loadPlayerStorage(connectedWallet);
+    const playerStatus = loadPlayerStorage(connectedWallet);
+    const sessionStatus = loadSessionStorage(connectedWallet);
 
     setPlayerInfo(playerStatus);
 
@@ -130,11 +131,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header targetNetwork={targetNetwork} connectedWallet={connectedWallet} connect={connect} />
 
         <LoadingScreen show={loadingInfo || updatingInstance || loadingCode} />
 
         <AlertScreen show={showAlert} type={alertType} title={alertTitle} text={alertText} setShow={setShowAlert} />
+
+        <Header targetNetwork={targetNetwork} connectedWallet={connectedWallet} connect={() => connect(displayAlert)} />
 
         <Routes>
 

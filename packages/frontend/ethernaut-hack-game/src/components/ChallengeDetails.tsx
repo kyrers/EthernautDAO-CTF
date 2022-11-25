@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Tab, Tabs } from "react-bootstrap";
 import { loadChallengeContractCode } from "../functions/challengeActions";
+import { storeSelectedChallenge } from "../functions/playerActions";
 import hljs from "highlight.js/lib/core";
 import BackButton from "./BackButton";
 import "../css/vs2015_dark.css";
-import { storeSelectedChallenge } from "../functions/playerActions";
 
 type FunctionProps = {
     selectedChallenge: any;
@@ -31,7 +31,6 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
     const [selectedChallengePlayerStatus, setSelectedChallengePlayerStatus] = useState(emptyChallengePlayerStatusObject);
 
     useEffect(() => {
-        console.log("## LOADING CODE")
         const loadCode = async (filePath: string) => {
             return await loadChallengeContractCode(filePath, displayAlert);
         };
@@ -64,6 +63,14 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatingInstance])
 
+    useEffect(() => {
+        if (!updatingInstance || "" !== selectedChallenge.id) {
+            loadPlayerChallengeProgress(selectedChallenge);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [playerInfo])
+
     const handleBackButtonClick = () => {
         setSelectedChallenge(emptyChallengeObject);
         setSelectedChallengePlayerStatus(emptyChallengePlayerStatusObject);
@@ -72,8 +79,10 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
     };
 
     const loadPlayerChallengeProgress = (challenge: any) => {
-        let challengeStatus = playerInfo.find(progress => progress.challengeId === challenge.id);
-        setSelectedChallengePlayerStatus(undefined !== challengeStatus ? challengeStatus : emptyChallengePlayerStatusObject);
+        if (null !== playerInfo) {
+            let challengeStatus = playerInfo.find(progress => progress.challengeId === challenge.id);
+            setSelectedChallengePlayerStatus(undefined !== challengeStatus ? challengeStatus : emptyChallengePlayerStatusObject);
+        }
     };
 
     const renderChallengeDetails = () => {

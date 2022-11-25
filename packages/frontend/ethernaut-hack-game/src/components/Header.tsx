@@ -1,8 +1,8 @@
 import { MouseEventHandler } from "react";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import HelpModal from "./HelpModal";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
 
 type FunctionProps = {
     targetNetwork: any;
@@ -20,7 +20,7 @@ function Header({ targetNetwork, connectedWallet, connect }: FunctionProps) {
     return (
         <header className="App-header">
             <div className="app-info-panel">
-                <img className="cursor-pointer" src={logo} onClick={handleLogoClick} />
+                <img className="cursor-pointer" src={logo} onClick={handleLogoClick} alt="Ethernaut DAO" />
                 <HelpModal />
             </div>
 
