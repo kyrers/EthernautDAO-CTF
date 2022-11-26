@@ -8,7 +8,7 @@ type FunctionProps = {
 function Footer({ footerText }: FunctionProps) {
     return (
         <footer className="App-footer">
-            <div>
+            <div className="height-25">
                 <a href="https://mint.ethernautdao.io/" target="_blank" rel="noopener noreferrer">
                     <Globe className="social-icon" size={24} />
                 </a>
@@ -24,12 +24,15 @@ function Footer({ footerText }: FunctionProps) {
                 </a>
             </div>
 
-            <div className="footer-brands">
-                <a href="https://www.openzeppelin.com/" target="_blank" rel="noopener noreferrer">
-                    <img src={ozLogo} alt="Open Zeppelin"/>
-                </a>
+            <div className="height-25">
                 <a className="ethernaut-footer" href="https://mint.ethernautdao.io/" target="_blank" rel="noopener noreferrer">
                     <p>{footerText}</p>
+                </a>
+            </div>
+
+            <div className="height-25">
+                <a href="https://www.openzeppelin.com/" target="_blank" rel="noopener noreferrer">
+                    <img src={ozLogo} alt="Open Zeppelin" height={20} />
                 </a>
             </div>
         </footer>

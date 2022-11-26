@@ -199,21 +199,16 @@
   margin-right: 10px;
 }
 
-.footer-brands {
-  display: flex;
-  flex-direction: row;
-}
-
 .ethernaut-footer {
   color: white;
-  text-decoration: none;
+  text-decoration: underline;
   font-size: larger;
-  margin-left: 50px;
+  font-weight: bold;
 }
 
-.ethernaut-footer:hover {
-  color: white !important;
-  text-decoration: none !important;
+.ethernaut-footer:hover,
+.social-icon:hover {
+  color: rgb(221, 216, 216) !important;
 }
 
 /*---------------------*/
@@ -274,6 +269,10 @@
 
 .pointer-events-none {
   pointer-events: none;
+}
+
+.height-25 {
+  height: 25px;
 }
 
 /*---------------------*/
