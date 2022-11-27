@@ -97,11 +97,15 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
         return (
             <>
                 <div className="challenge-details-header">
-                    <div className="d-inline-flex">
-                        <BackButton callback={handleBackButtonClick} />
-                        <h1 className="margin-left-20">{selectedChallenge.name}</h1>
+                    <div className="d-inline-flex flex-column">
+                        <div className="d-inline-flex">
+                            <BackButton callback={handleBackButtonClick} />
+                            <h1 className="margin-left-20">{selectedChallenge.name}</h1>
+                        </div>
+                        <h4 className="text-align-start"><b>Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b></h4>
+
                     </div>
-                    <div className="d-inline-flex">
+                    <div className="controller-buttons">
                         <Button className="margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={"" !== selectedChallengePlayerStatus.challengeId}>
                             {
                                 <span>Create instance</span>
@@ -119,7 +123,6 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
                     {
                         selectedChallenge.code.map((contract: any, index: any) =>
                             <Tab className="contract-tab" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
-                                <b className="font-size-18">Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b>
                                 <pre className="contract-code-container">
                                     <code className="hljs" dangerouslySetInnerHTML={getContractCode(index)} />
                                 </pre>

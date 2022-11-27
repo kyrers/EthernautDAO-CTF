@@ -15,11 +15,16 @@ async function main() {
   console.log("## Deploying challenges factories...");
   const privateDataFactory = await ethers.getContractFactory("PrivateDataFactory");
   const privateDataFactoryContract = await privateDataFactory.deploy(process.env.PRIVATE_DATA_RND_STRING);
-  console.log(`Private Data Factory deployed to ${privateDataFactoryContract.address}`);
+  console.log(`Private Data Factory deployed at ${privateDataFactoryContract.address}`);
+
+  const lightweightMultisigWalletFactory = await ethers.getContractFactory("LightweightMultisigWalletFactory");
+  const lightweightMultisigWalletFactoryContract = await lightweightMultisigWalletFactory.deploy(process.env.WALLET_LIBRARY_ADDRESS);
+  console.log(`Lightweight Multisig Wallet Factory deployed at ${lightweightMultisigWalletFactoryContract.address}`);
 
   //Register challenges
   console.log("## Registering challenges...");
   await controllerContract.addChallenge(privateDataFactoryContract.address);
+  await controllerContract.addChallenge(lightweightMultisigWalletFactoryContract.address);
   console.log("## Done!");
 }
 
