@@ -21,10 +21,15 @@ async function main() {
   const lightweightMultisigWalletFactoryContract = await lightweightMultisigWalletFactory.deploy(process.env.WALLET_LIBRARY_ADDRESS);
   console.log(`Lightweight Multisig Wallet Factory deployed at ${lightweightMultisigWalletFactoryContract.address}`);
 
+  const carMarketFactory = await ethers.getContractFactory("CarMarketFactory");
+  const carMarketFactoryContract = await carMarketFactory.deploy();
+  console.log(`Car Market Factory deployed at ${carMarketFactoryContract.address}`);
+
   //Register challenges
   console.log("## Registering challenges...");
   await controllerContract.addChallenge(privateDataFactoryContract.address);
   await controllerContract.addChallenge(lightweightMultisigWalletFactoryContract.address);
+  await controllerContract.addChallenge(carMarketFactoryContract.address);
   console.log("## Done!");
 }
 
