@@ -14,7 +14,6 @@ import "./PrivateData.sol";
     }
 
     function createInstance(address _player) public payable override returns (address) {
-        _player;
         return address(new PrivateData(rndString));
     }
 

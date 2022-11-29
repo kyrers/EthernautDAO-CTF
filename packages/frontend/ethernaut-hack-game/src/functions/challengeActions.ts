@@ -4,7 +4,8 @@ export const createChallengeInstance: any = async (controller: Contract, challen
     try {
         let createTx = await controller.createInstance(factoryAddress);
         let receipt = await createTx.wait();
-        let newInstance = { "challengeId": challengeId, "instanceAddress": receipt.events[0].args[1], "solved": false };
+        let instanceAddress = receipt.events.pop().args[1];
+        let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false };
         return newInstance;
     } catch (error: any) {
         if (error.code === 4001) {
