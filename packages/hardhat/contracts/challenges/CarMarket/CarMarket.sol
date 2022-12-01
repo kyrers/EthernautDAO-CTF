@@ -14,6 +14,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  *         Getting a free car involves, using the company's tokens which is given to first timers for free.
  *         There is a problem however, malicious users have discovered how to get a second car for free.
  *         Your job is to figure out how to purchase a second car in a clever and ingenious way.
+ *
+ * @dev Modified by kyrers to work with the EthernautCTF.
  */
 contract CarMarket is Ownable {
     // -- States --
@@ -30,6 +32,8 @@ contract CarMarket is Ownable {
 
     mapping(address => uint256) private carCount;
     mapping(address => mapping(uint256 => Car)) public purchasedCars;
+
+    event TransferredCars(address _from, address _to);
 
     /**
      * @notice Sets the car token during deployment.
@@ -108,6 +112,29 @@ contract CarMarket is Ownable {
      */
     function getCarCount(address _carOwner) external view returns (uint256) {
         return carCount[_carOwner];
+    }
+
+    /**
+     * @dev Transfers ownership of cars to a given address.
+     */
+    function transferCarsOwnership(address _to) external {
+        require(address(0) != _to, "Zero address is invalid.");
+
+        uint currentOwnerCarCount = carCount[msg.sender];
+        require(currentOwnerCarCount > 0, "You own no cars.");
+
+        uint newOwnerCarCount = ++carCount[_to];
+
+        for (uint i = 1; i <= currentOwnerCarCount; i++) {
+            purchasedCars[_to][newOwnerCarCount] = purchasedCars[msg.sender][i];
+            carCount[_to] = newOwnerCarCount;
+            ++newOwnerCarCount;
+            delete purchasedCars[msg.sender][i];         
+        }
+
+        delete carCount[msg.sender];
+
+        emit TransferredCars(msg.sender, _to);
     }
 
     /**

@@ -6,6 +6,7 @@ pragma solidity >=0.7.0 <0.9.0;
  * @title CarMarket Interface
  * @author Jelo
  * @notice Contains the functions required to purchase a car and withdraw funds from the contract.
+ * @dev Modified by kyrers to work with the EthernautCTF
  */
 interface ICarMarket {
     /**
@@ -22,4 +23,6 @@ interface ICarMarket {
     function withdrawFunds() external;
 
     function isExistingCustomer(address _customer) external view returns (bool);
+
+    function transferCarsOwnership(address _to) external;
 }
