@@ -25,11 +25,16 @@ async function main() {
   const carMarketFactoryContract = await carMarketFactory.deploy();
   console.log(`Car Market Factory deployed at ${carMarketFactoryContract.address}`);
 
+  const vendingMachineFactory = await ethers.getContractFactory("VendingMachineFactory");
+  const vendingMachineFactoryContract = await vendingMachineFactory.deploy({value: ethers.utils.parseEther("0.1")});
+  console.log(`Vending Machine Factory deployed at ${vendingMachineFactoryContract.address}`);
+
   //Register challenges
   console.log("## Registering challenges...");
   await controllerContract.addChallenge(privateDataFactoryContract.address);
   await controllerContract.addChallenge(lightweightMultisigWalletFactoryContract.address);
   await controllerContract.addChallenge(carMarketFactoryContract.address);
+  await controllerContract.addChallenge(vendingMachineFactoryContract.address);
   console.log("## Done!");
 }
 

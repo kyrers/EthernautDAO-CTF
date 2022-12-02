@@ -6,7 +6,8 @@ import "./PrivateData.sol";
 
 /**
  * @author kyrers
- */contract PrivateDataFactory is Challenge {
+ */
+contract PrivateDataFactory is Challenge {
     string private rndString;
 
     constructor(string memory _rndString) {
