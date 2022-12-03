@@ -111,7 +111,7 @@ function App() {
   const validateSolution = async (challengeId: number, instanceAddress: string) => {
     setUpdatingInstance(true);
 
-    let solved = await validateChallengeSolution(controller, challengeId, instanceAddress, displayAlert);
+    let solved = await validateChallengeSolution(connectedWallet, controller, challengeId, instanceAddress, displayAlert);
     if (solved) {
       setChallengeSolved(connectedWallet, instanceAddress, loadPlayerInfo);
     }

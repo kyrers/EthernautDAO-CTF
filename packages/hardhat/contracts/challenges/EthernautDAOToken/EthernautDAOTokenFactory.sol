@@ -8,16 +8,25 @@ import "./EthernautDAOToken.sol";
  * @author kyrers
  */
 contract EthernautDAOTokenFactory is Challenge {
-    address private deployer;
-
-
     function createInstance(address _player) public payable override returns (address) {
-        deployer = msg.sender;
-        return address(new EthernautDAOToken());
+        revert("Can't create instance without using a burner wallet");
+    }
+
+    function createInstanceUsingBurnerWallet(address _player, address _burnerWallet)
+        public
+        payable
+        override
+        returns (address)
+    {
+        return address(new EthernautDAOToken(_burnerWallet));
     }
 
     function validateInstance(address payable _instance, address _player) public override returns (bool) {
+        revert("Can't validate instance without using a burner wallet");
+    }
+
+    function validateInstanceUsingBurnerWallet(address payable _instance, address _player, address _burnerWallet) public override returns (bool) {
         EthernautDAOToken challengeInstance = EthernautDAOToken(_instance);
-        return 0 == challengeInstance.balanceOf(deployer) && 0 < challengeInstance.balanceOf(_player);
+        return 0 >= challengeInstance.balanceOf(_burnerWallet) && 0 < challengeInstance.balanceOf(_player);
     }
 }

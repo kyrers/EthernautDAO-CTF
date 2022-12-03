@@ -52,6 +52,21 @@ contract Controller is Ownable {
         emit InstanceCreated(msg.sender, instance);
     }
 
+     /**
+     * @notice Create a new challenge instance with the use of a burner wallet
+     * @param _challenge The challenge for which to create the new instance
+     * @param _burnerWallet The burner wallet address
+     */
+    function createInstanceUsingBurnerWallet(Challenge _challenge, address _burnerWallet) external payable {
+        require(existingChallenges[address(_challenge)], "This challenge is not registered!");
+
+        address instance = _challenge.createInstanceUsingBurnerWallet{value: msg.value}(msg.sender, _burnerWallet);
+
+        challengeInstances[instance] = ChallengeData(msg.sender, _challenge, false);
+
+        emit InstanceCreated(msg.sender, instance);
+    }
+
     /**
      * @notice Validate the solution for a specific challenge
      * @param _challenge The challenge to verify
@@ -63,7 +78,25 @@ contract Controller is Ownable {
         require(challengeData.player == msg.sender, "This player is not associated with this challenge instance!");
         require(challengeData.solved == false, "Already solved!");
 
-        if(challengeData.challenge.validateInstance(_challenge, msg.sender)) {
+        if (challengeData.challenge.validateInstance(_challenge, msg.sender)) {
+            challengeData.solved = true;
+            emit InstanceSolved(msg.sender, challengeData.challenge);
+        }
+    }
+
+    /**
+     * @notice Validate the solution for a specific challenge using a burner wallet
+     * @param _challenge The challenge to verify
+     * @param _burnerWallet The burner wallet address
+     */
+    function validateSolutionUsingBurnerWallet(address payable _challenge, address _burnerWallet) external {
+        require(_challenge != address(0), "Zero address is not a valid challenge address!");
+        ChallengeData storage challengeData = challengeInstances[_challenge];
+
+        require(challengeData.player == msg.sender, "This player is not associated with this challenge instance!");
+        require(challengeData.solved == false, "Already solved!");
+
+        if (challengeData.challenge.validateInstanceUsingBurnerWallet(_challenge, msg.sender, _burnerWallet)) {
             challengeData.solved = true;
             emit InstanceSolved(msg.sender, challengeData.challenge);
         }

@@ -17,8 +17,16 @@ contract VendingMachineFactory is Challenge {
         return address(new VendingMachine{value: 0.1 ether}());
     }
 
+    function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {
+        revert("Can't create instance using a burner wallet");
+    }
+
     function validateInstance(address payable _instance, address _player) public override returns (bool) {
         return 0.1 ether <= _player.balance && 0 ether == _instance.balance;
+    }
+
+    function validateInstanceUsingBurnerWallet(address payable _instance, address _player, address _burnerWallet) public override returns (bool) {
+        revert("Can't create instance using a burner wallet");
     }
 
     receive() external payable {

@@ -8,5 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  */
 abstract contract Challenge is Ownable {
   function createInstance(address _player) virtual public payable returns (address);
+  function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) virtual public payable returns (address);
   function validateInstance(address payable _instance, address _player) virtual public returns (bool);
+  function validateInstanceUsingBurnerWallet(address payable _instance, address _player, address _burnerWallet) virtual public returns (bool);
 }

@@ -11,11 +11,11 @@ contract EthernautDAOToken is ERC20, ERC20Burnable, Pausable, AccessControl, ERC
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor() ERC20("ETHERNAUTDAO TOKEN", "EDT") ERC20Permit("ETHERNAUTDAO TOKEN") {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(PAUSER_ROLE, msg.sender);
-        _mint(msg.sender, 1 * 10 ** decimals());
-        _setupRole(MINTER_ROLE, msg.sender);
+    constructor(address _owner) ERC20("ETHERNAUTDAO TOKEN", "EDT") ERC20Permit("ETHERNAUTDAO TOKEN") {
+        _setupRole(DEFAULT_ADMIN_ROLE, _owner);
+        _setupRole(PAUSER_ROLE, _owner);
+        _mint(_owner, 1 * 10 ** decimals());
+        _setupRole(MINTER_ROLE, _owner);
     }
 
     function pause() public {
