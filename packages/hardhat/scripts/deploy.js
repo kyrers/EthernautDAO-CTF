@@ -26,8 +26,12 @@ async function main() {
   console.log(`Car Market Factory deployed at ${carMarketFactoryContract.address}`);
 
   const vendingMachineFactory = await ethers.getContractFactory("VendingMachineFactory");
-  const vendingMachineFactoryContract = await vendingMachineFactory.deploy({value: ethers.utils.parseEther("0.1")});
+  const vendingMachineFactoryContract = await vendingMachineFactory.deploy({ value: ethers.utils.parseEther("0.1") });
   console.log(`Vending Machine Factory deployed at ${vendingMachineFactoryContract.address}`);
+
+  const ethernautDAOTokenFactory = await ethers.getContractFactory("EthernautDAOTokenFactory");
+  const ethernautDAOTokenFactoryContract = await ethernautDAOTokenFactory.deploy();
+  console.log(`Ethernaut DAO Token Factory deployed at ${ethernautDAOTokenFactoryContract.address}`);
 
   //Register challenges
   console.log("## Registering challenges...");
@@ -35,6 +39,7 @@ async function main() {
   await controllerContract.addChallenge(lightweightMultisigWalletFactoryContract.address);
   await controllerContract.addChallenge(carMarketFactoryContract.address);
   await controllerContract.addChallenge(vendingMachineFactoryContract.address);
+  await controllerContract.addChallenge(ethernautDAOTokenFactoryContract.address);
   console.log("## Done!");
 }
 

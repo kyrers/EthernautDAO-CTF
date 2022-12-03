@@ -19,7 +19,7 @@ import NotFound from "./components/NotFound";
 
 function App() {
   //Placeholder for no selected challenge
-  const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
+  const emptyChallengeObject = { "id": 0, "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
 
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
   const [connectedWallet, setConnectedWallet] = useState("");
@@ -101,14 +101,14 @@ function App() {
     setShowAlert(true);
   }
 
-  const createInstance = async (challengeId: string, factoryAddress: string) => {
+  const createInstance = async (challengeId: number, factoryAddress: string) => {
     setUpdatingInstance(true);
     let newInstance = await createChallengeInstance(controller, challengeId, factoryAddress, displayAlert);
     addChallengeInstance(connectedWallet, newInstance, loadPlayerInfo);
     setUpdatingInstance(false);
   };
 
-  const validateSolution = async (challengeId: string, instanceAddress: string) => {
+  const validateSolution = async (challengeId: number, instanceAddress: string) => {
     setUpdatingInstance(true);
 
     let solved = await validateChallengeSolution(controller, challengeId, instanceAddress, displayAlert);

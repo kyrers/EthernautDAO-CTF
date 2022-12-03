@@ -15,8 +15,8 @@ type FunctionProps = {
     loadingCode: boolean;
     setSelectedChallenge: Dispatch<SetStateAction<any>>
     setLoadingCode: Dispatch<SetStateAction<boolean>>;
-    createInstance: (challengeId: string, factoryAddress: string) => void;
-    validateSolution: (challengeId: string, instanceAddress: string) => void;
+    createInstance: (challengeId: number, factoryAddress: string) => void;
+    validateSolution: (challengeId: number, instanceAddress: string) => void;
     displayAlert: (type: string, title: string, text: string) => void;
 };
 
@@ -24,8 +24,8 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
     const navigate = useNavigate();
 
     //Placeholders for no selected challenge/challenge player status
-    const emptyChallengeObject = { "id": "", "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
-    const emptyChallengePlayerStatusObject = { "challengeId": "", "instanceAddress": "", "solved": false };
+    const emptyChallengeObject = { "id": 0, "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
+    const emptyChallengePlayerStatusObject = { "challengeId": 0, "instanceAddress": "", "solved": false, "extra": [] };
 
     const [selectedChallengeContractsCode, setSelectedChallengeContractsCode] = useState<any[]>([]);
     const [selectedChallengePlayerStatus, setSelectedChallengePlayerStatus] = useState(emptyChallengePlayerStatusObject);
@@ -102,16 +102,20 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
                             <BackButton callback={handleBackButtonClick} />
                             <h1 className="margin-left-20">{selectedChallenge.name}</h1>
                         </div>
-                        <h4 className="text-align-start"><b>Address: {"" !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b></h4>
-
+                        <h4 className="text-align-start"><b>Address: {0 !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b></h4>
+                        {
+                            selectedChallengePlayerStatus.extra.map((detail: any) =>
+                                <h3>{detail.key}: {detail.value}</h3>
+                            )
+                        }
                     </div>
                     <div className="controller-buttons">
-                        <Button className="margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={"" !== selectedChallengePlayerStatus.challengeId}>
+                        <Button className="margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={0 !== selectedChallengePlayerStatus.challengeId}>
                             {
                                 <span>Create instance</span>
                             }
                         </Button>
-                        <Button onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={"" === selectedChallengePlayerStatus.challengeId || selectedChallengePlayerStatus.solved}>
+                        <Button onClick={() => validateSolution(selectedChallenge.id, selectedChallengePlayerStatus.instanceAddress)} disabled={0 === selectedChallengePlayerStatus.challengeId || selectedChallengePlayerStatus.solved}>
                             {
                                 <span>Validate solution</span>
                             }

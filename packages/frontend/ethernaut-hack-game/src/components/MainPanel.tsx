@@ -19,7 +19,7 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
         navigate(`challenge/${challenge.name}`);
     }
 
-    const hasSolvedChallenge = (challengeId: string) => {
+    const hasSolvedChallenge = (challengeId: number) => {
         if (null === playerInfo) {
             return false;
         }
