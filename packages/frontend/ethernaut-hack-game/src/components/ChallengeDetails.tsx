@@ -97,7 +97,7 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
         return (
             <>
                 <div className="challenge-details-header">
-                    <div className="d-inline-flex flex-column">
+                    <div className="d-inline-flex flex-column text-align-initial">
                         <div className="d-inline-flex">
                             <BackButton callback={handleBackButtonClick} />
                             <h1 className="margin-left-20">{selectedChallenge.name}</h1>
@@ -105,7 +105,7 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
                         <h4 className="text-align-start"><b>Address: {0 !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b></h4>
                         {
                             selectedChallengePlayerStatus.extra.map((detail: any) =>
-                                <h3>{detail.key}: {detail.value}</h3>
+                                <h5 key={detail.key}>{detail.key}: {detail.value}</h5>
                             )
                         }
                     </div>

@@ -280,6 +280,10 @@
   height: 25px;
 }
 
+.text-align-initial {
+  text-align: initial;
+}
+
 /*---------------------*/
 
 /* MEDIA */
