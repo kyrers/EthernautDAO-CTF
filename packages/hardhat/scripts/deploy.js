@@ -33,6 +33,10 @@ async function main() {
   const ethernautDAOTokenFactoryContract = await ethernautDAOTokenFactory.deploy();
   console.log(`Ethernaut DAO Token Factory deployed at ${ethernautDAOTokenFactoryContract.address}`);
 
+  const winningNumberFactory = await ethers.getContractFactory("WinningNumberFactory");
+  const winningNumberFactoryContract = await winningNumberFactory.deploy(process.env.MOD);
+  console.log(`Winning Number Factory deployed at ${winningNumberFactoryContract.address}`);
+
   //Register challenges
   console.log("## Registering challenges...");
   await controllerContract.addChallenge(privateDataFactoryContract.address);
@@ -40,6 +44,7 @@ async function main() {
   await controllerContract.addChallenge(carMarketFactoryContract.address);
   await controllerContract.addChallenge(vendingMachineFactoryContract.address);
   await controllerContract.addChallenge(ethernautDAOTokenFactoryContract.address);
+  await controllerContract.addChallenge(winningNumberFactoryContract.address);
   console.log("## Done!");
 }
 
