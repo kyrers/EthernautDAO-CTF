@@ -35,6 +35,7 @@ contract Controller is Ownable {
      * @param _challenge The new challenge
      */
     function addChallenge(Challenge _challenge) external onlyOwner {
+        require(!existingChallenges[address(_challenge)], "This challenge is already registered!");
         existingChallenges[address(_challenge)] = true;
     }
 

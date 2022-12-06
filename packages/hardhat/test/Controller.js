@@ -34,6 +34,16 @@ describe("Controller", function () {
             expect(challengeExists).to.be.true;
         });
 
+        it("Should fail because challenge is already registered", async function () {
+            const [owner] = await ethers.getSigners();
+
+            const challengeFactory = await ethers.getContractFactory("PrivateDataFactory");
+            const challengeContract = await challengeFactory.deploy(rndString);
+            
+            await controllerContract.addChallenge(challengeContract.address);
+            await expect(controllerContract.addChallenge(challengeContract.address)).to.be.reverted;
+        });
+
         it("Should fail because it's not the owner", async function () {
             const [owner, signer] = await ethers.getSigners();
 
