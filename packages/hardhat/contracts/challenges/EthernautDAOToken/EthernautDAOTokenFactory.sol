@@ -12,12 +12,7 @@ contract EthernautDAOTokenFactory is Challenge {
         revert("Can't create instance without using a burner wallet");
     }
 
-    function createInstanceUsingBurnerWallet(address _player, address _burnerWallet)
-        public
-        payable
-        override
-        returns (address)
-    {
+    function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {
         return address(new EthernautDAOToken(_burnerWallet));
     }
 

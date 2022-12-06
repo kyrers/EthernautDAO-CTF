@@ -31,6 +31,6 @@ contract LightweightMultisigWalletFactory is Challenge {
     }
     
     function validateInstanceUsingBurnerWallet(address payable _instance, address _player, address _burnerWallet) public override returns (bool) {
-        revert("Can't create instance using a burner wallet");
+        revert("Can't validate instance using a burner wallet");
     }
 }
