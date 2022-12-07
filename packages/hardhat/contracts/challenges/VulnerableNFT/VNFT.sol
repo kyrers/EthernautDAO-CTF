@@ -15,7 +15,9 @@ contract VNFT is ERC721, Ownable {
     mapping(address => uint256) public mintsPerWallet;
     string public baseURI;
 
-    constructor() ERC721("VulnerableNFT", "VNFT") {}
+    constructor(address _owner) ERC721("VulnerableNFT", "VNFT") {
+        transferOwnership(_owner);
+    }
 
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
