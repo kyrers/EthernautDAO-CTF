@@ -20,7 +20,6 @@ const createDefaultInstance: any = async (controller: Contract, challengeId: num
         let receipt = await createTx.wait();
         let instanceAddress = receipt.events.pop().args[1];
         let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
-        verifyContract(challengeId, instanceAddress);
         return newInstance;
     } catch (error: any) {
         handleError(error, displayAlert);
@@ -35,7 +34,6 @@ const createEthernautDAOTokenInstance: any = async (controller: Contract, challe
         let receipt = await createTx.wait();
         let instanceAddress = receipt.events.pop().args[1];
         let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [{ "key": "Owner Address", "value": wallet.address }, { "key": "Owner Private Key", "value": wallet.privateKey }] };
-        verifyContract(challengeId, instanceAddress);
         return newInstance;
     } catch (error: any) {
         handleError(error, displayAlert);
@@ -62,8 +60,6 @@ const createVNFTInstance: any = async (controller: Contract, challengeId: number
         let instanceAddress = receipt.events.pop().args[1];
         let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
 
-        verifyContract(challengeId, instanceAddress);
-
         //Send the needed transaction
         let ABI = ["function whitelistMint(address to, uint256 qty, bytes32 hash, bytes memory signature) external payable"];
         let iface = new ethers.utils.Interface(ABI);
@@ -86,17 +82,6 @@ const createVNFTInstance: any = async (controller: Contract, challengeId: number
         console.log(error);
         handleError(error, displayAlert);
     }
-};
-
-const verifyContract: any = async (challengeId: number, instanceAddress: string) => {
-    /*try {
-        await HardhatRuntimeEnvironment.run("verify:verify", {
-            address: instanceAddress,
-            constructorArguments: [process.env.REACT_APP_PRIVATE_DATA_RND_STRING],
-          });
-    } catch (error: any) {
-        console.log("Error verifying contract: ", error);
-    }*/
 };
 
 const createRandomWallet: any = async () => {
