@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
 
 module.exports = {
@@ -15,7 +16,10 @@ module.exports = {
     },
     "optimistic-goerli": {
       url: `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`,
-      accounts: [`${process.env.OPTIMISTIC_GOERLI_ACCOUNT_PK}`,]
+      accounts: [`${process.env.OPTIMISTIC_GOERLI_ACCOUNT_PK}`]
     }
+  },
+  etherscan: {
+    apiKey: `${process.env.OPTIMISTIC_ETHERSCAN_API_KEY}`
   }
 };
