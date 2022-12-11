@@ -14,7 +14,7 @@ contract EtherWalletFactory is Challenge {
 
     function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {
         //Half of the ether sent goes directly to the EtherWallet, the other half goes to the burner wallet because it's required to make a transaction after deploy, so it needs some ether for gas
-        require(0.005 ether <= msg.value, "Not enough ether sent");
+        require(0.1 ether <= msg.value, "Not enough ether sent");
         bool success = payable(_burnerWallet).send(msg.value / 2);
         require(success, "Failed to create instance. Please try again.");
 

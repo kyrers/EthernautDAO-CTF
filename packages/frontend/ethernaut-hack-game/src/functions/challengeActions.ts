@@ -7,6 +7,8 @@ export const createChallengeInstance: any = async (controller: Contract, challen
             return createEthernautDAOTokenInstance(controller, challengeId, factoryAddress, displayAlert);
         case 8: //A transaction to the contract is needed so the user knows an hash and signature from the contract owner
             return createVNFTInstance(controller, challengeId, factoryAddress, displayAlert);
+        case 9: //A transaction to the contract is needed so the user knows a signature from the contract owner
+            return createEtherWalletnstance(controller, challengeId, factoryAddress, displayAlert);
         default:
             return createDefaultInstance(controller, challengeId, factoryAddress, displayAlert);
 
@@ -46,13 +48,8 @@ const createVNFTInstance: any = async (controller: Contract, challengeId: number
 
         //Generate message and signature
         const message = ethers.utils.solidityKeccak256(["string"], ["random"]);
-        console.log("MESSAGE: ", message);
-
         const messageHash = ethers.utils.arrayify(message);
-        console.log("HASH: ", messageHash);
-
         const signature = await wallet.signMessage(messageHash);
-        console.log("SIG: ", signature);
         //-----
 
         let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("0.005") });
@@ -75,6 +72,61 @@ const createVNFTInstance: any = async (controller: Contract, challengeId: number
         let signedTx = await wallet.signTransaction(tx);
 
         await wallet.provider.sendTransaction(signedTx);
+        //-----
+
+        return newInstance;
+    } catch (error: any) {
+        handleError(error, displayAlert);
+    }
+};
+
+const createEtherWalletnstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
+    try {
+        const wallet = await createRandomWallet();
+
+        //Generate a signature for the correct message
+        const signingKey = new ethers.utils.SigningKey(wallet.privateKey);
+        const message = ethers.utils.solidityKeccak256(["string"], ["\x19Ethereum Signed Message:\n32"]);
+        const signature = signingKey.signDigest(message);
+        const joinedSignature = ethers.utils.joinSignature(signature);
+        //-----
+
+        let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("0.1") });
+        let receipt = await createTx.wait();
+        let instanceAddress = receipt.events.pop().args[1];
+        let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
+
+        //Send the withdraw transaction
+        let ABI = ["function withdraw(bytes memory signature) external"];
+        let iface = new ethers.utils.Interface(ABI);
+        let callData = iface.encodeFunctionData("withdraw", [joinedSignature]);
+
+        let tx = {
+            to: instanceAddress,
+            data: callData,
+            gasPrice: ethers.utils.parseUnits('1', 'gwei'),
+            gasLimit: 1000000
+        };
+
+        let signedTx = await wallet.signTransaction(tx);
+
+        await wallet.provider.sendTransaction(signedTx);
+        //-----
+
+        //Send all funds back to the EtherWallet, minus some for gas fees, so the user can get them back after solving the challenge
+        let deposit = (await wallet.getBalance()).sub(ethers.utils.parseEther("0.01"));
+
+        let depositTx = {
+            to: instanceAddress,
+            nonce: 1,
+            value: deposit,
+            gasPrice: ethers.utils.parseUnits('1', 'gwei'),
+            gasLimit: 1000000
+        };
+
+        let signedDepositTx = await wallet.signTransaction(depositTx);
+
+        await wallet.provider.sendTransaction(signedDepositTx);
         //-----
 
         return newInstance;
