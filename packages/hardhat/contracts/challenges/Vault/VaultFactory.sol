@@ -2,27 +2,31 @@
 pragma solidity ^0.8.17;
 
 import "../../Challenge.sol";
-import "./EtherWallet.sol";
+import "./Vault.sol";
+import "./Vesting.sol";
 
 /**
  * @author kyrers
  */
-contract EtherWalletFactory is Challenge {
+contract VaultFactory is Challenge {
     function createInstance(address _player) public payable override returns (address) {
         revert("Can't create instance without using a burner wallet");
     }
 
     function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {
-        //Half of the ether sent goes directly to the EtherWallet, the other half goes to the burner wallet because it's required to make a transaction after deploy, so it needs some ether for gas
-        require(0.1 ether <= msg.value, "Not enough ether sent");
-        bool success = payable(_burnerWallet).send(msg.value / 2);
-        require(success, "Failed to create instance. Please try again.");
+        require(0.05 ether <= msg.value, "Not enough ether sent");
 
-        return address(new EtherWallet{value: msg.value / 2}(_burnerWallet));
+        Vesting vesting = new Vesting();
+        Vault vault = new Vault(_burnerWallet, address(vesting));
+
+        (bool sent, bytes memory data) = address(vault).call{value: msg.value }("");
+        require(sent, "Failed to set up the challenge. Please try again.");
+
+        return address(vault);
     }
 
     function validateInstance(address payable _instance, address _player) public override returns (bool) {
-        EtherWallet challengeInstance = EtherWallet(_instance);
+        Vault challengeInstance = Vault(_instance);
         return 0 ether == address(challengeInstance).balance;
     }
 

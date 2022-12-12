@@ -8,7 +8,9 @@ export const createChallengeInstance: any = async (controller: Contract, challen
         case 8: //A transaction to the contract is needed so the user knows an hash and signature from the contract owner
             return createVNFTInstance(controller, challengeId, factoryAddress, displayAlert);
         case 9: //A transaction to the contract is needed so the user knows a signature from the contract owner
-            return createEtherWalletnstance(controller, challengeId, factoryAddress, displayAlert);
+            return createEtherWalletInstance(controller, challengeId, factoryAddress, displayAlert);
+        case 10: //A burner wallet is needed to be the owner
+            return createVaultInstance(controller, challengeId, factoryAddress, displayAlert);
         default:
             return createDefaultInstance(controller, challengeId, factoryAddress, displayAlert);
 
@@ -80,7 +82,7 @@ const createVNFTInstance: any = async (controller: Contract, challengeId: number
     }
 };
 
-const createEtherWalletnstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
+const createEtherWalletInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
     try {
         const wallet = await createRandomWallet();
 
@@ -135,6 +137,21 @@ const createEtherWalletnstance: any = async (controller: Contract, challengeId: 
         handleError(error, displayAlert);
     }
 };
+
+const createVaultInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
+    try {
+        const wallet = await createRandomWallet();
+
+        let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("0.05") });
+        let receipt = await createTx.wait();
+        let instanceAddress = receipt.events.pop().args[1];
+        let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
+        return newInstance;
+    } catch (error: any) {
+        handleError(error, displayAlert);
+    }
+};
+
 
 const createRandomWallet: any = async () => {
     const optimisticGoerliProvider = new ethers.providers.JsonRpcProvider(`https://opt-goerli.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}`);
