@@ -14,7 +14,7 @@ contract VNFTFactory is Challenge {
 
     function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {
         //Burner wallet is required to make a transaction after deploy, so the user needs to send some ether for gas
-        require(0.005 ether <= msg.value, "Not enough ether sent");
+        require(0.1 ether <= msg.value, "Not enough ether sent");
         bool success = payable(_burnerWallet).send(msg.value);
         require(success, "Failed to create instance. Please try again.");
 

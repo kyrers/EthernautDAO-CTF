@@ -54,7 +54,7 @@ const createVNFTInstance: any = async (controller: Contract, challengeId: number
         const signature = await wallet.signMessage(messageHash);
         //-----
 
-        let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("0.005") });
+        let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("0.1") });
         let receipt = await createTx.wait();
         let instanceAddress = receipt.events.pop().args[1];
         let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
@@ -142,7 +142,7 @@ const createVaultInstance: any = async (controller: Contract, challengeId: numbe
     try {
         const wallet = await createRandomWallet();
 
-        let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("0.05") });
+        let createTx = await controller.createInstanceUsingBurnerWallet(factoryAddress, wallet.address, { value: ethers.utils.parseEther("1") });
         let receipt = await createTx.wait();
         let instanceAddress = receipt.events.pop().args[1];
         let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };

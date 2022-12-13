@@ -14,7 +14,7 @@ contract VaultFactory is Challenge {
     }
 
     function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {
-        require(0.05 ether <= msg.value, "Not enough ether sent");
+        require(0.1 ether <= msg.value, "Not enough ether sent");
 
         Vesting vesting = new Vesting();
         Vault vault = new Vault(_burnerWallet, address(vesting));
