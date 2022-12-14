@@ -88,7 +88,7 @@ function App() {
 
     setPlayerInfo(playerStatus);
 
-    if (null !== sessionStatus && "" !== sessionStatus.id) {
+    if (null !== sessionStatus && 0 !== sessionStatus.id) {
       setLoadingCode(true);
       setSelectedChallenge(sessionStatus);
     }
