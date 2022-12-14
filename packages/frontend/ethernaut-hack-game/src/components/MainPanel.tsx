@@ -47,6 +47,13 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
                             </Col>
                         )
                     }
+
+                    {/* Workaround to keep challenge cards aligned in the last row (remove if new challenge is added) */
+                        index === 2 ?
+                            <Col key="visual-helper" sm={2} />
+                            :
+                            null
+                    }
                 </Row>
             )
         }
