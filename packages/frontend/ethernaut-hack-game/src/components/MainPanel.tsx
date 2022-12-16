@@ -33,6 +33,16 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
                                  RENDER
     --------------------------------------------------------------*/
     const renderChallenges = () => {
+        const getCategory = (index: Number) => {
+            switch (index) {
+                case 1:
+                    return "Medium";
+                case 2:
+                    return "Hard";
+                default:
+                    return "Easy";
+            };
+        }
         const splitRowIntoChunks = (row: Array<any>, chunkSize: number) => {
             let sortedCategory = [];
             for (let i = 0; i < row.length; i += chunkSize) {
@@ -50,13 +60,13 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
             return sortedCategory;
         };
 
-        const renderChallengeCol = (challenge: any, index: Number) => {
+        const renderChallengeCol = (category: string, challenge: any, index: Number) => {
             if (null === challenge) {
-                return (<Col key={`visual-helper-${index}`} sm={2} />);
+                return (<Col key={`${category}-visual-helper-${index}`} sm={2} />);
             }
 
             return (
-                <Col key={`challenge-id-${challenge.id}`} sm={2}
+                <Col key={`${category}-challenge-id-${challenge.id}`} sm={2}
                     className={`challenge-card ${hasSolvedChallenge(challenge.id) ? "solved-background" : "unsolved-background"} ${allowClicks ? "" : "pointer-events-none"}`}
                     onClick={() => handleColClick(challenge)}>
                     <span>{challenge.name}</span>
@@ -65,20 +75,29 @@ function MainPanel({ playerInfo, allowClicks, handleSelectedChallenge }: Functio
         }
 
         const renderRow = (challengesCategory: Array<any>, index: Number) => {
+            let category = getCategory(index);
             let sortedCategory = splitRowIntoChunks(challengesCategory, 4);
 
             return (
-                sortedCategory.map((challengesRow, index) => {
-                    return (
-                        <Row key={`challenge-row-${index}`}>
-                            {
-                                challengesRow.map((challenge, index) =>
-                                    renderChallengeCol(challenge, index)
-                                )
-                            }
-                        </Row>
-                    );
-                })
+                <div key={`${category}`}>
+                    <h1 className="challenge-category-header">
+                        <u>{category}</u>
+                    </h1>
+
+                    {
+                        sortedCategory.map((challengesRow, index) => {
+                            return (
+                                <Row key={`${category}-challenge-row-${index}`}>
+                                    {
+                                        challengesRow.map((challenge, index) =>
+                                            renderChallengeCol(category, challenge, index)
+                                        )
+                                    }
+                                </Row>
+                            );
+                        })
+                    }
+                </div>
             );
         };
 

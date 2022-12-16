@@ -143,6 +143,12 @@
   margin-bottom: 25px;
 }
 
+.challenge-category-header {
+  text-align: initial;
+  text-underline-position: under;
+  padding: 25px;
+}
+
 .challenge-details-panel .tab-content {
   display: flex;
   flex-direction: column;
