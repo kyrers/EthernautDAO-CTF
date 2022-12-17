@@ -37,6 +37,26 @@ async function main() {
   const winningNumberFactoryContract = await winningNumberFactory.deploy(process.env.MOD);
   console.log(`Winning Number Factory deployed at ${winningNumberFactoryContract.address}`);
 
+  const switchFactory = await ethers.getContractFactory("SwitchFactory");
+  const switchFactoryContract = await switchFactory.deploy();
+  console.log(`Switch Factory deployed at ${switchFactoryContract.address}`);
+
+  const vnftFactory = await ethers.getContractFactory("VNFTFactory");
+  const vnftFactoryContract = await vnftFactory.deploy();
+  console.log(`VNFT Factory deployed at ${vnftFactoryContract.address}`);
+
+  const etherWalletFactory = await ethers.getContractFactory("EtherWalletFactory");
+  const etherWalletFactoryContract = await etherWalletFactory.deploy();
+  console.log(`Ether Wallet Factory deployed at ${etherWalletFactoryContract.address}`);
+
+  const vaultFactory = await ethers.getContractFactory("VaultFactory");
+  const vaultFactoryContract = await vaultFactory.deploy();
+  console.log(`Vault Factory deployed at ${vaultFactoryContract.address}`);
+
+  const stakingFactory = await ethers.getContractFactory("StakingFactory");
+  const stakingFactoryContract = await stakingFactory.deploy();
+  console.log(`Staking Factory deployed at ${stakingFactoryContract.address}`);
+
   //Register challenges
   console.log("## Registering challenges...");
   await controllerContract.addChallenge(privateDataFactoryContract.address);
@@ -45,6 +65,12 @@ async function main() {
   await controllerContract.addChallenge(vendingMachineFactoryContract.address);
   await controllerContract.addChallenge(ethernautDAOTokenFactoryContract.address);
   await controllerContract.addChallenge(winningNumberFactoryContract.address);
+  await controllerContract.addChallenge(switchFactoryContract.address);
+  await controllerContract.addChallenge(vnftFactoryContract.address);
+  await controllerContract.addChallenge(etherWalletFactoryContract.address);
+  await controllerContract.addChallenge(vaultFactoryContract.address);
+  await controllerContract.addChallenge(stakingFactoryContract.address);
+
   console.log("## Done!");
 }
 
