@@ -3,7 +3,7 @@ import { loadPlayerStorage } from "./playerActions";
 
 export const createChallengeInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
     switch (challengeId) {
-        case 5: //User needs to know a wallet PK
+        case 7: //User needs to know a wallet PK
             return createEthernautDAOTokenInstance(controller, challengeId, factoryAddress, displayAlert);
         case 8: //A transaction to the contract is needed so the user knows an hash and signature from the contract owner
             return createVNFTInstance(controller, challengeId, factoryAddress, displayAlert);
@@ -159,7 +159,7 @@ const createRandomWallet: any = async () => {
 
 export const validateChallengeSolution: any = async (player: string, controller: Contract, challengeId: number, instanceAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
     switch (challengeId) {
-        case 5: //User needs to know a wallet PK, hence we create a random wallet
+        case 7: //User needs to know a wallet PK, hence we create a random wallet
             return validateEthernautDAOTokenInstance(player, controller, challengeId, instanceAddress, displayAlert);
         default:
             return validateDefaultInstance(controller, challengeId, instanceAddress, displayAlert);

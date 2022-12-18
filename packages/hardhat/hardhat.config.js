@@ -14,12 +14,14 @@ module.exports = {
     localhost: {
       url: "http://localhost:8545"
     },
-    "optimistic-goerli": {
+    optimisticGoerli: {
       url: `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`,
       accounts: [`${process.env.OPTIMISTIC_GOERLI_ACCOUNT_PK}`]
     }
   },
   etherscan: {
-    apiKey: `${process.env.OPTIMISTIC_ETHERSCAN_API_KEY}`
+    apiKey: {
+      optimisticGoerli: `${process.env.OPTIMISTIC_ETHERSCAN_API_KEY}`
+    }
   }
 };
