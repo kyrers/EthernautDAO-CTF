@@ -13,8 +13,8 @@ contract VendingMachineFactory is Challenge {
     constructor() payable {}
 
     function createInstance(address _player) public payable override returns (address) {
-        require(0.1 ether <= address(this).balance, "The factory does not have sufficient funds. Please, contact the developers");
-        return address(new VendingMachine{value: 0.1 ether}());
+        require(0.1 ether <= msg.value, "Not enough ether sent");
+        return address(new VendingMachine{value: msg.value}());
     }
 
     function createInstanceUsingBurnerWallet(address _player, address _burnerWallet) public payable override returns (address) {

@@ -3,6 +3,8 @@ import { loadPlayerStorage } from "./playerActions";
 
 export const createChallengeInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
     switch (challengeId) {
+        case 3: //User needs to make a deposit
+            return createVendingMachineInstance(controller, challengeId, factoryAddress, displayAlert);
         case 7: //User needs to know a wallet PK
             return createEthernautDAOTokenInstance(controller, challengeId, factoryAddress, displayAlert);
         case 8: //A transaction to the contract is needed so the user knows an hash and signature from the contract owner
@@ -21,6 +23,18 @@ export const createChallengeInstance: any = async (controller: Contract, challen
 const createDefaultInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
     try {
         let createTx = await controller.createInstance(factoryAddress);
+        let receipt = await createTx.wait();
+        let instanceAddress = receipt.events.pop().args[1];
+        let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
+        return newInstance;
+    } catch (error: any) {
+        handleError(error, displayAlert);
+    }
+};
+
+const createVendingMachineInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
+    try {
+        let createTx = await controller.createInstance(factoryAddress, { value: ethers.utils.parseEther("0.1") });
         let receipt = await createTx.wait();
         let instanceAddress = receipt.events.pop().args[1];
         let newInstance = { "challengeId": challengeId, "instanceAddress": instanceAddress, "solved": false, extra: [] };
@@ -116,7 +130,7 @@ const createEtherWalletInstance: any = async (controller: Contract, challengeId:
         //-----
 
         //Send all funds back to the EtherWallet, minus some for gas fees, so the user can get them back after solving the challenge
-        let deposit = (await wallet.getBalance()).sub(ethers.utils.parseEther("0.01"));
+        let deposit = (await wallet.getBalance()).sub(ethers.utils.parseEther("0.005"));
 
         let depositTx = {
             to: instanceAddress,

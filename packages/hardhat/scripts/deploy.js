@@ -26,7 +26,7 @@ async function main() {
   console.log(`Car Market Factory deployed at ${carMarketFactoryContract.address}`);
 
   const vendingMachineFactory = await ethers.getContractFactory("VendingMachineFactory");
-  const vendingMachineFactoryContract = await vendingMachineFactory.deploy({ value: ethers.utils.parseEther("0.1") });
+  const vendingMachineFactoryContract = await vendingMachineFactory.deploy();
   console.log(`Vending Machine Factory deployed at ${vendingMachineFactoryContract.address}`);
 
   const ethernautDAOTokenFactory = await ethers.getContractFactory("EthernautDAOTokenFactory");
