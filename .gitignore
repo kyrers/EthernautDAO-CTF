@@ -6,6 +6,7 @@ packages/hardhat/.env
 ToDo.*
 
 packages/frontend/ethernaut-hack-game/.env
+packages/frontend/ethernaut-hack-game/.env.production
 packages/frontend/ethernaut-hack-game/src/utils/challenges.json
 packages/frontend/ethernaut-hack-game/package-lock.json
 packages/frontend/ethernaut-hack-game/yarn.lock
