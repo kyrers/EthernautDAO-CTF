@@ -3,7 +3,7 @@ import { loadPlayerStorage } from "./playerActions";
 
 export const createChallengeInstance: any = async (controller: Contract, challengeId: number, factoryAddress: string, displayAlert: (type: string, title: string, text: string) => void) => {
     switch (challengeId) {
-        case 3: //User needs to make a deposit
+        case 5: //User needs to make a deposit
             return createVendingMachineInstance(controller, challengeId, factoryAddress, displayAlert);
         case 7: //User needs to know a wallet PK
             return createEthernautDAOTokenInstance(controller, challengeId, factoryAddress, displayAlert);
