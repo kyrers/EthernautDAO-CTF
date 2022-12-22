@@ -102,15 +102,15 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
                             <BackButton callback={handleBackButtonClick} />
                             <h1 className="margin-left-20">{selectedChallenge.name}</h1>
                         </div>
-                        <h4 className="text-align-start"><b>Address: {0 !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b></h4>
+                        <h4 className="challenge-details-contract-info"><b>Address: {0 !== selectedChallengePlayerStatus.challengeId ? selectedChallengePlayerStatus.instanceAddress : "TBD"}</b></h4>
                         {
                             selectedChallengePlayerStatus.extra.map((detail: any) =>
-                                <h5 key={detail.key}>{detail.key}: {detail.value}</h5>
+                                <h5 className="challenge-details-contract-info" key={detail.key}>{detail.key}: {detail.value}</h5>
                             )
                         }
                     </div>
                     <div className="controller-buttons">
-                        <Button className="margin-right-10" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={0 !== selectedChallengePlayerStatus.challengeId}>
+                        <Button className="create-instance-button" onClick={() => createInstance(selectedChallenge.id, selectedChallenge.factory)} disabled={0 !== selectedChallengePlayerStatus.challengeId}>
                             {
                                 <span>Create instance</span>
                             }
