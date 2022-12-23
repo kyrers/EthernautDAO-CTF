@@ -183,6 +183,9 @@ body {
 }
 
 .challenge-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
