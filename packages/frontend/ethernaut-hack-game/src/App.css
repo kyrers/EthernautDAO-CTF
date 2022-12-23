@@ -237,7 +237,7 @@ body {
 .contract-code-container {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  max-height: 65vh;
+  max-height: 60vh;
 }
 
 .hljs {
@@ -341,16 +341,14 @@ body {
   }
 }
 
-@media (max-width: 575px) {
-  .App-footer {
-    position: unset;
-  }
-}
-
 @media (max-width: 768px) {
   .App-header {
     margin-top: 10px;
     flex-direction: column;
+  }
+
+  .App-footer {
+    position: unset;
   }
 
   .wallet-panel {
@@ -362,9 +360,14 @@ body {
   }
 }
 
+
 @media (max-width: 1324px) {
   .challenge-details-header {
     flex-direction: column;
+  }
+
+  .contract-code-container {
+    max-height: 55vh;
   }
 
   .controller-buttons {
