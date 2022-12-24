@@ -1,8 +1,8 @@
 html,
 body,
-.App,
+.App/*,
 .main-panel,
-.challenge-details-panel {
+.challenge-details-panel*/ {
   /* fallback for when -webkit-fill-available is not avaialbe */
   min-height: 100vh;
   min-height: -webkit-fill-available;
@@ -39,6 +39,7 @@ body {
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
+  max-height: 200px;
 }
 
 .App-footer {
@@ -47,10 +48,12 @@ body {
   flex-wrap: wrap;
   align-items: center;
   padding: 20px;
-  margin-bottom: 5px;
   position: fixed;
   bottom: 0;
   width: 100%;
+  max-height: 100px;
+  z-index: 1;
+  background: black;
 }
 
 .App .btn-primary {
@@ -154,8 +157,10 @@ body {
 .challenge-details-panel {
   display: flex;
   flex-direction: column;
-  padding: 25px;
+  padding: 0px 25px 0px 25px;
   width: 100%;
+  max-height: calc(100vh - 250px);
+  overflow: auto;
 }
 
 .main-panel .row {
@@ -273,7 +278,7 @@ body {
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 15px;
+  width: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -347,9 +352,9 @@ body {
     flex-direction: column;
   }
 
-  .App-footer {
+  /*.App-footer {
     position: unset;
-  }
+  }*/
 
   .wallet-panel {
     margin-right: 0px;
