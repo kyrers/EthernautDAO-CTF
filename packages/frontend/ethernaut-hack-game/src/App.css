@@ -335,6 +335,11 @@ body {
 /*---------------------*/
 
 /* MEDIA */
+@media (max-width: 325px) {
+  .App-footer {
+    padding: 0px;
+  }
+}
 
 @media (max-width: 391px) {
   .create-instance-button {
@@ -342,14 +347,18 @@ body {
   }
 }
 
-@media (max-width: 424px) {
+@media (max-width: 425px) {
   .wallet-panel .btn {
     font-size: small;
+  }
+
+  .main-panel,
+  .challenge-details-panel {
+    height: calc(100vh - 300px) !important;
   }
 }
 
 @media (max-width: 623px) {
-
   .main-panel,
   .challenge-details-panel {
     height: calc(100vh - 225px);
