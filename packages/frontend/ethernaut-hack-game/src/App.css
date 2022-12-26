@@ -1,12 +1,14 @@
 html,
 body,
-.App/*,
-.main-panel,
-.challenge-details-panel*/ {
+.App,
+:root {
   /* fallback for when -webkit-fill-available is not avaialbe */
   min-height: 100vh;
   min-height: -webkit-fill-available;
+  min-width: 100vw;
+  min-width: -webkit-fill-available;
   box-sizing: border-box;
+  position: fixed;
 }
 
 body {
@@ -21,7 +23,6 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
   text-align: center;
   color: white;
   width: 100%;
@@ -111,6 +112,7 @@ body {
   width: 50%;
   margin-top: 5rem;
   align-items: center;
+  word-break: break-all;
 }
 
 .error-alert .btn-close:focus {
@@ -159,7 +161,7 @@ body {
   flex-direction: column;
   padding: 0px 25px 0px 25px;
   width: 100%;
-  max-height: calc(100vh - 250px);
+  height: calc(100vh - 150px);
   overflow: auto;
 }
 
@@ -240,8 +242,8 @@ body {
 }
 
 .contract-code-container {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
   max-height: 60vh;
 }
 
@@ -346,15 +348,19 @@ body {
   }
 }
 
+@media (max-width: 623px) {
+
+  .main-panel,
+  .challenge-details-panel {
+    height: calc(100vh - 225px);
+  }
+}
+
 @media (max-width: 768px) {
   .App-header {
     margin-top: 10px;
     flex-direction: column;
   }
-
-  /*.App-footer {
-    position: unset;
-  }*/
 
   .wallet-panel {
     margin-right: 0px;
