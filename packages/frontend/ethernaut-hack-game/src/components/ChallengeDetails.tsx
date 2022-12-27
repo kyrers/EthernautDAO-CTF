@@ -27,7 +27,7 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
     const emptyChallengeObject = { "id": 0, "name": "", "factory": "", "description": "", "code": [{ "contractName": "", "filePath": "" }] };
     const emptyChallengePlayerStatusObject = { "challengeId": 0, "instanceAddress": "", "solved": false, "extra": [] };
 
-    const [selectedChallengeContractsCode, setSelectedChallengeContractsCode] = useState<any[]>([]);
+    const [selectedChallengeContractsCode, setSelectedChallengeContractsCode] = useState<Map<string, any>>();
     const [selectedChallengePlayerStatus, setSelectedChallengePlayerStatus] = useState(emptyChallengePlayerStatusObject);
 
     useEffect(() => {
@@ -36,11 +36,11 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
         };
 
         if ("" !== selectedChallenge.id) {
-            let loadedCode: any[] = [];
+            let loadedCode = new Map<string, any>();
             let promises: any[] = [];
 
             selectedChallenge.code.forEach((contract: any) => {
-                promises.push(loadCode(contract.filePath).then(result => loadedCode.push(result)));
+                promises.push(loadCode(contract.filePath).then(result => loadedCode.set(contract.contractName, result)));
             });
 
             Promise.all(promises).then(_ => {
@@ -86,10 +86,10 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
     };
 
     const renderChallengeDetails = () => {
-        const getContractCode = (index: number) => {
+        const getContractCode = (contractName: string) => {
             if (!loadingCode) {
                 return {
-                    __html: hljs.highlight(selectedChallengeContractsCode[index], { language: "solidity" }).value
+                    __html: hljs.highlight(selectedChallengeContractsCode?.get(contractName), { language: "solidity" }).value
                 }
             }
         }
@@ -125,10 +125,10 @@ function ChallengeDetails({ selectedChallenge, playerInfo, loadingCode, updating
 
                 <Tabs id="code-tabs" className="mb-3">
                     {
-                        selectedChallenge.code.map((contract: any, index: any) =>
+                        selectedChallenge.code.map((contract: any) =>
                             <Tab className="contract-tab" key={contract.contractName} eventKey={contract.contractName} title={contract.contractName}>
                                 <pre className="contract-code-container">
-                                    <code className="hljs" dangerouslySetInnerHTML={getContractCode(index)} />
+                                    <code className="hljs" dangerouslySetInnerHTML={getContractCode(contract.contractName)} />
                                 </pre>
                             </Tab>
                         )
