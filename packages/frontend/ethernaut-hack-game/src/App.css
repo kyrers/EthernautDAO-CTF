@@ -64,6 +64,7 @@ body {
   cursor: pointer;
   padding: 10px 24px;
   border-radius: 32px;
+  max-width: 200px;
   background: linear-gradient(97.42deg, #cdffe6, #8fdeff 94.24%);
 }
 
@@ -348,10 +349,6 @@ body {
 }
 
 @media (max-width: 425px) {
-  .wallet-panel .btn {
-    font-size: small;
-  }
-
   .main-panel,
   .challenge-details-panel {
     height: calc(100vh - 300px) !important;

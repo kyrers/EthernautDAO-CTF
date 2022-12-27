@@ -17,6 +17,10 @@ function Header({ targetNetwork, connectedWallet, connect }: FunctionProps) {
         navigate("/");
     }
 
+    const formatAddress = (address: string) => {
+        return address.substring(0, 6) + "..." + address.slice(-4);
+    }
+
     return (
         <header className="App-header">
             <div className="app-info-panel">
@@ -28,7 +32,7 @@ function Header({ targetNetwork, connectedWallet, connect }: FunctionProps) {
                 <Button onClick={connect}>
                     {
                         connectedWallet !== "" ?
-                            <span>{connectedWallet}</span>
+                            <span title={connectedWallet}>{formatAddress(connectedWallet)}</span>
                             :
                             <span>Connect wallet</span>
                     }
