@@ -3,6 +3,8 @@ This repository contains the full implementation of the EthernautDAO CTF game.
 
 However, it was built with the idea of acting as a template for CTF games using `Hardhat` for backend and `React + TypeScript` for frontend.
 
+### [Live demo](https://ethernautdaoctf.netlify.app/)
+
 ## Backend
 The backend is where:
 - Challenges and their factories contracts are;
